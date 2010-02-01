@@ -7,26 +7,21 @@
 #include "vti_as.h"
 #include "buzzer.h"
 #include "display.h"
+#include "timer.h"
 
 // from acceleration.c
 extern u16 convert_acceleration_value_to_mgrav(u8 value);
 
 void cage_main(void){
-  u8 xyz[3];
-  u16 accel_data;
-  static u8 is_heart = 0;
-  
-  // heartbeat to prove we're here
-  if(is_heart)
-    display_symbol(LCD_ICON_HEART, SEG_OFF);
-  else
-    display_symbol(LCD_ICON_HEART, SEG_ON);
-  
-  is_heart = !is_heart;
+  static u8 xyz[3];
 
-/*  
   as_start();
+  Timer0_A4_Delay(CONV_MS_TO_TICKS(20));
   as_get_data(xyz);
-  accel_data = (u16)((accel_data * 0.2) + (sAccel.data * 0.8));
-  */
+  as_stop();
+  
+  if(xyz[2] > 0xE0 && xyz[2] < 0xE8)
+    display_symbol(LCD_ICON_RECORD, SEG_ON);
+  else
+    display_symbol(LCD_ICON_RECORD, SEG_OFF);
 }
