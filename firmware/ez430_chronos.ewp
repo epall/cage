@@ -3645,6 +3645,9 @@
       <name>$PROJ_DIR$\logic\bluerobin_stubs.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\logic\cage.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\logic\clock.c</name>
     </file>
     <file>

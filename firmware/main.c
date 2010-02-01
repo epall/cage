@@ -58,16 +58,14 @@
 #include "menu.h"
 #include "date.h"
 #include "alarm.h"
+#include "altitude.h"
 #include "stopwatch.h"
 #include "battery.h"
 #include "temperature.h"
-#include "altitude.h"
 #include "battery.h"
 #include "acceleration.h"
-#include "bluerobin.h"
 #include "rfsimpliciti.h"
 #include "simpliciti.h"
-#include "test.h"
 
 
 // *************************************************************************************************
@@ -113,6 +111,7 @@ void (*fptr_lcd_function_line2)(u8 line, u8 update);
 // Extern section
 
 extern void start_simpliciti_sync(void);
+extern void cage_main(void);
 
 
 // *************************************************************************************************
@@ -129,9 +128,6 @@ int main(void)
 	// Assign initial value to global variables
 	init_global_variables();
 	
-	// Branch to welcome screen
-	test_mode();
-	
 	// Main control loop: wait in low power mode until some event needs to be processed
 	while(1)
 	{
@@ -145,7 +141,9 @@ int main(void)
     	if (request.all_flags) process_requests();
     	
     	// Before going to LPM3, update display
-    	if (display.all_flags) display_update();	
+    	if (display.all_flags) display_update();
+        
+        cage_main();
  	}	
 }
 
@@ -337,11 +335,7 @@ void init_global_variables(void)
 	
 	// Reset acceleration measurement
 	reset_acceleration();
-	
-	// Reset BlueRobin stack
-	reset_bluerobin();
-
-	// Reset SimpliciTI stack
+		// Reset SimpliciTI stack
 	reset_rf();
 	
 	// Reset temperature measurement 
@@ -610,19 +604,6 @@ void display_update(void)
 	{
 		// Update line2 only when new data is available
 		fptr_lcd_function_line2(LINE2, DISPLAY_LINE_UPDATE_PARTIAL);
-	}
-	
-	// ---------------------------------------------------------------------
-	// Restore blinking icons (blinking memory is cleared when calling set_value)
-	if (display.flag.full_update) 
-	{
-		if (is_bluerobin() == BLUEROBIN_CONNECTED) 
-		{
-			// Turn on beeper icon to show activity
-			display_symbol(LCD_ICON_BEEPER1, SEG_ON_BLINK_OFF);
-			display_symbol(LCD_ICON_BEEPER2, SEG_ON_BLINK_OFF);
-			display_symbol(LCD_ICON_BEEPER3, SEG_ON_BLINK_OFF);
-		}
 	}
 	
 	// Clear display flag
