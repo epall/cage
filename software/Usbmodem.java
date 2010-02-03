@@ -8,7 +8,6 @@ import java.io.OutputStream;
 
 import java.lang.Byte;
 import java.lang.String;
-import java.lang.Integer;
 
 public class Usbmodem {
     public InputStream input;
@@ -46,30 +45,30 @@ public class Usbmodem {
 
     int[] getAccelerometerData() throws Exception
     {
-	Usbmodem dongle = this;
-	byte[] getAccData = {-1, 0x08, 0x07, 0x00, 0x00, 0x00, 0x00};
-	byte[] accData = new byte[24];
-	Byte dataHandler;
-	int[] accxyz = new int[3];
+		Usbmodem dongle = this;
+		byte[] getAccData = {-1, 0x08, 0x07, 0x00, 0x00, 0x00, 0x00};
+		byte[] accData = new byte[24];
+		Byte dataHandler;
+		int[] accxyz = new int[3];
 
-	dongle.output.write(getAccData);
-	dongle.output.flush();
-	int len = dongle.input.read(accData);
+		dongle.output.write(getAccData);
+		dongle.output.flush();
+		int len = dongle.input.read(accData);
 
-	while ((len != 7) | ((accData[4] == 0) & (accData[5] == 0) & (accData[6] == 0)))
-	{
-	    dongle.output.write(getAccData);
-	    dongle.output.flush();
-	    len = dongle.input.read(accData);
-	}
-	dataHandler = accData[4];
-	accxyz[0] = dataHandler.intValue();
-	dataHandler = accData[5];
-	accxyz[1] = dataHandler.intValue();
-	dataHandler = accData[6];
-	accxyz[2] = dataHandler.intValue();
+		while ((len != 7) | ((accData[4] == 0) & (accData[5] == 0) & (accData[6] == 0)))
+		{
+			dongle.output.write(getAccData);
+			dongle.output.flush();
+			len = dongle.input.read(accData);
+		}
+		dataHandler = accData[4];
+		accxyz[0] = dataHandler.intValue();
+		dataHandler = accData[5];
+		accxyz[1] = dataHandler.intValue();
+		dataHandler = accData[6];
+		accxyz[2] = dataHandler.intValue();
 
-	return accxyz;
+		return accxyz;
     }
 
     void closePort()
