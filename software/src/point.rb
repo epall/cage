@@ -1,8 +1,9 @@
 class Point
-  def initialize(x, y, z)
-    @x = x
-    @y = y
-    @z = z
+  
+  def initialize(points)
+    @x = points[0]
+    @y = points[1]
+    @z = points[2]
   end
 
   attr_accessor :x, :yd, :z
