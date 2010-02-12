@@ -17,6 +17,7 @@
     <orderEntry type="library" exported="" name="JRuby SDK 1.4.0 facet library" level="application" />
     <orderEntry type="library" name="JRuby 1.4" level="application" />
     <orderEntry type="library" name="JGoodies FormLayout" level="application" />
+    <orderEntry type="library" name="RXTX" level="application" />
   </component>
 </module>
 
