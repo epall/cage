@@ -57,6 +57,7 @@
           <forms/>
         </constraints>
         <properties>
+          <enabled value="false"/>
           <text value="Stop Accelerometer"/>
           <toolTipText value="Stop the Accelerometer"/>
         </properties>

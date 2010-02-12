@@ -8,13 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
-/**
- * Created by IntelliJ IDEA.
- * User: okeefm
- * Date: Feb 8, 2010
- * Time: 2:15:41 PM
- * To change this template use File | Settings | File Templates.
- */
 public class MainWindow {
 
     public JPanel mainPanel;
@@ -44,6 +37,12 @@ public class MainWindow {
                     }
                 }
                 ruby.runScriptlet("$run = true");
+                SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    StopAccelerometerButton.setEnabled(true);
+                    StartAccelerometer.setEnabled(false);
+                }
+                });
             }
         });
 
@@ -51,6 +50,12 @@ public class MainWindow {
             public void actionPerformed(final ActionEvent e) {
                 ruby.runScriptlet("$run = false");
                 dongle.closePort();
+                SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    StopAccelerometerButton.setEnabled(false);
+                    StartAccelerometer.setEnabled(true);
+                }
+                });
             }
         });
 

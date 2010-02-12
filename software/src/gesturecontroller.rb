@@ -11,9 +11,7 @@ class Gesturecontroller
 
   def createnewgesture
     newgesture = Gesture.new
-    #what am I going to do about recognizing the start & end of gestures?
-    #also a question: how do I connect a ruby class like this to a GUI form?
-    #ignore me for now, I'm working on getting this less angry
+    
     @gestures << newgesture
   end
 

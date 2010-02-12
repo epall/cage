@@ -7,5 +7,7 @@ $win.StartAccelerometer.enabled = true
 loop do
   if $run
     puts $modem.getAccelerometerData.to_a.join(",")
+  else
+    $win.StopAccelerometerButton.enabled = false
   end
 end
