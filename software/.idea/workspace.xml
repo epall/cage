@@ -72,13 +72,13 @@
       <file leaf-file-name="gesturecontroller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gesturecontroller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="4" selection-start="798" selection-end="798" vertical-scroll-proportion="0.0">
+            <state line="20" column="6" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Cage.iml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Cage.iml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Cage.iml">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -112,10 +112,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="main.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="0" selection-start="657" selection-end="657" vertical-scroll-proportion="0.0">
+            <state line="39" column="0" selection-start="657" selection-end="657" vertical-scroll-proportion="0.7846154">
               <folding />
             </state>
           </provider>
@@ -227,6 +227,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="software" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="software" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gestures" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -512,29 +530,14 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Gesture.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="7" selection-start="221" selection-end="221" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MainWindow.form">
       <provider selected="true" editor-type-id="ui-designer">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/point.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="10" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="2" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="0" selection-start="657" selection-end="657" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MainWindow.java">
@@ -547,16 +550,33 @@
         <state line="11" column="13" selection-start="233" selection-end="233" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gesturecontroller.rb">
+    <entry file="file://$PROJECT_DIR$/Cage.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="4" selection-start="798" selection-end="798" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Cage.iml">
+    <entry file="file://$PROJECT_DIR$/src/Gesture.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="15" column="7" selection-start="221" selection-end="221" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gesturecontroller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="6" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/point.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="10" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="0" selection-start="657" selection-end="657" vertical-scroll-proportion="0.7846154">
           <folding />
         </state>
       </provider>

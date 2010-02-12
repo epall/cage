@@ -1,5 +1,3 @@
-require "yaml"
-
 class Gesturecontroller
 
   def initialize
@@ -20,11 +18,7 @@ class Gesturecontroller
   end
 
   def storeallgestures
-    gesturefile = File.open('Gestures/gestures.yml', 'w')
-    @gestures.each do |gesture|
-      YAML.dump(gesture, gesturefile)
-    end
-    gesturefile.close
+    File.open('Gestures/gestures.yml') { |out| YAML.dump( @gestures, out) }
   end
 
  end
