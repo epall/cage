@@ -74,6 +74,15 @@ public class Usbmodem {
 
     void closePort()
     {
-	this.serialPort.close();
+        byte[] startDongle = {-1, 0x07, 0x03};
+        byte[] stopDongle = {-1, 0x09, 0x03};
+
+        //Apparently you need to write startDongle before StopDongle in order to actually stop the access point
+        try{
+            this.output.write(startDongle);
+            this.output.write(stopDongle);
+        }
+        catch(Exception e) {}
+	    this.serialPort.close();
     }
 }

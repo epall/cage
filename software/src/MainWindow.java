@@ -71,7 +71,7 @@ public class MainWindow {
     public static void main(String[] args) {
         final JFrame window = new JFrame("CAGE");
         final MainWindow main = new MainWindow();
-        window.setBounds(100, 100, 500, 400);
+        window.setBounds(100, 100, 610, 400);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setContentPane(main.mainPanel);
         SwingUtilities.invokeLater(new Runnable() {
