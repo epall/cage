@@ -4,4 +4,5 @@ firmware/ez430_chronos.dep
 firmware/settings/ez430_chronos.dni
 firmware/settings/ez430_chronos.dbgdt
 out/
-workspace.xml
+software/.idea/workspace.xml
+
