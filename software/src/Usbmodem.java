@@ -81,8 +81,9 @@ public class Usbmodem {
         try{
             this.output.write(startDongle);
             this.output.write(stopDongle);
-        }
-        catch(Exception e) {}
-	    this.serialPort.close();
+            this.output.close();
+            this.input.close();
+            this.serialPort.close();
+        } catch (Exception ex) {}
     }
 }

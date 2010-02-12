@@ -37,25 +37,16 @@ public class MainWindow {
                     }
                 }
                 ruby.runScriptlet("$run = true");
-                SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    StopAccelerometerButton.setEnabled(true);
-                    StartAccelerometer.setEnabled(false);
-                }
-                });
+                StopAccelerometerButton.setEnabled(true);
+                StartAccelerometer.setEnabled(false);
             }
         });
 
         StopAccelerometerButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
-                ruby.runScriptlet("$run = false");
-                dongle.closePort();
-                SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    StopAccelerometerButton.setEnabled(false);
-                    StartAccelerometer.setEnabled(true);
-                }
-                });
+                ruby.runScriptlet("$die = true");
+                StopAccelerometerButton.setEnabled(false);
+                StartAccelerometer.setEnabled(true);
             }
         });
 

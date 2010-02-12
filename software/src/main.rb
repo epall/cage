@@ -1,4 +1,5 @@
 $modem = $win.dongle
+$die = false
 
 # Booted up, go enable things
 $win.StartAccelerometer.enabled = true
@@ -7,7 +8,11 @@ $win.StartAccelerometer.enabled = true
 loop do
   if $run
     puts $modem.getAccelerometerData.to_a.join(",")
-  else
-    $win.StopAccelerometerButton.enabled = false
+  end
+
+  if $die
+    puts "Closing port"
+    $die = false
+    $modem.closePort
   end
 end
