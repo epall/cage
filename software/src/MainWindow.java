@@ -17,13 +17,14 @@ import java.io.IOException;
  */
 public class MainWindow {
 
-    private JPanel mainPanel;
-    private JButton StartAccelerometer;
-    private JButton newGesture;
-    private JButton MatchGesture;
-    private JEditorPane AppScriptPane;
-    private JButton StopAccelerometerButton;
-    private Usbmodem dongle;
+    public JPanel mainPanel;
+    public JButton StartAccelerometer;
+    public JButton newGesture;
+    public JButton MatchGesture;
+    public JEditorPane AppScriptPane;
+    public JButton StopAccelerometerButton;
+    public Usbmodem dongle;
+    private ScriptingContainer ruby;
 
 
     public MainWindow() {
@@ -42,11 +43,13 @@ public class MainWindow {
                         JOptionPane.showMessageDialog(null, "Unable to connect to dongle");
                     }
                 }
+                ruby.runScriptlet("$run = true");
             }
         });
 
         StopAccelerometerButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
+                ruby.runScriptlet("$run = false");
                 dongle.closePort();
             }
         });
@@ -77,11 +80,10 @@ public class MainWindow {
             }
         });
         main.initJRuby();
-
     }
 
     private void initJRuby() {
-        ScriptingContainer ruby = new ScriptingContainer();
+        ruby = new ScriptingContainer();
         ruby.put("$win", this);
         ruby.runScriptlet(PathType.RELATIVE, "src/main.rb");
     }

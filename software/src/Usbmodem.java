@@ -44,7 +44,7 @@ public class Usbmodem {
 		}
 	}
 
-    int[] getAccelerometerData() throws Exception
+    public int[] getAccelerometerData() throws Exception
     {
 	Usbmodem dongle = this;
 	byte[] getAccData = {-1, 0x08, 0x07, 0x00, 0x00, 0x00, 0x00};

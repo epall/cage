@@ -25,7 +25,7 @@
           <forms/>
         </constraints>
         <properties>
-          <enabled value="true"/>
+          <enabled value="false"/>
           <text value="Start Accelerometer"/>
           <toolTipText value="Start the accelerometer"/>
         </properties>
