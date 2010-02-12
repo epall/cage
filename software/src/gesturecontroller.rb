@@ -3,10 +3,8 @@ class Gesturecontroller
   def initialize
     @gestures = Array.new
       File.open('Gestures/gestures.yml', 'r') do |gesture_file|
-        YAML.load_documents(gesture_file) { |gesture| @gestures << gesture }
+        @gestures = YAML.load(gesture_file)
       end
-    @dongle = Usbmodem.new()
-    @dongle.connect("COM4")
   end
 
   def createnewgesture
