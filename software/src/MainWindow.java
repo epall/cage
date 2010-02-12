@@ -1,3 +1,6 @@
+import org.jruby.embed.PathType;
+import org.jruby.embed.ScriptingContainer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -61,9 +64,23 @@ public class MainWindow {
 
     public static void main(String[] args) {
         final JFrame window = new JFrame("CAGE");
+        final MainWindow main = new MainWindow();
         window.setBounds(100, 100, 500, 400);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setVisible(true);
+        window.setContentPane(main.mainPanel);
+        SwingUtilities.invokeLater(new Runnable(){
+            public void run(){
+                window.setVisible(true);
+            }
+        });
+        main.initJRuby();
+
+    }
+
+    private void initJRuby() {
+        ScriptingContainer ruby = new ScriptingContainer();
+        ruby.put("$win", this);
+        ruby.runScriptlet(PathType.RELATIVE, "src/main.rb");
     }
 
 }

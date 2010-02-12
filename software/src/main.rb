@@ -1,6 +1,1 @@
-
-
-class Main
-  
-    
-end
+puts "Hello, world!"
