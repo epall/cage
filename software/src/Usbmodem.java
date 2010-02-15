@@ -27,6 +27,7 @@ public class Usbmodem {
 
 			if (commPort instanceof SerialPort)
 			{
+                commPort.enableReceiveTimeout(1000);
 				serialPort = (SerialPort) commPort;
 				//set parameters for usb dongle serial port.
 				serialPort.setSerialPortParams(115200,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
