@@ -19,6 +19,7 @@ public class MainWindow {
     public JButton MatchGesture;
     public JEditorPane AppScriptPane;
     public JButton StopAccelerometerButton;
+    public JButton stopGesture;
 
     public ConcurrentLinkedQueue<String> events;
     public PointSource pointSource;
@@ -48,6 +49,16 @@ public class MainWindow {
         newGesture.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
                 events.add("new_gesture");
+                stopGesture.setEnabled(true);
+                newGesture.setEnabled(false);
+            }
+        });
+
+        stopGesture.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent e) {
+                events.add("stop_gesture");
+                stopGesture.setEnabled(false);
+                newGesture.setEnabled(true);
             }
         });
 

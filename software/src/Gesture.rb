@@ -3,12 +3,16 @@ class Gesture
       @points = Array.new
 	end
 
-	def addpoint(point)
+	def add_point (point)
         @points << point
     end
 
     def addaction(action)
       @action = action
+    end
+
+    def convert_points_to_gesture
+      $stderr.puts @points.length
     end
 
 	def returnallpoints

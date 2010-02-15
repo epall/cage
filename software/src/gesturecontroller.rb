@@ -1,20 +1,24 @@
+require 'src/Gesture'
+require 'yaml'
+
 class Gesturecontroller
 
   def initialize
     @gestures = Array.new
-      File.open('Gestures/gestures.yml', 'r') do |gesture_file|
-        @gestures = YAML.load(gesture_file)
-      end
+      #File.open('src/Gestures/gestures.yml', 'r') do |gesture_file|
+       # @gestures = YAML.load(gesture_file)
+      #end
   end
 
-  def createnewgesture
-    newgesture = Gesture.new
+  def add_gesture(newgesture)
+
+    newgesture.convert_points_to_gesture
     
     @gestures << newgesture
   end
 
   def storeallgestures
-    File.open('Gestures/gestures.yml') { |out| YAML.dump( @gestures, out) }
+    File.open('src/Gestures/gestures.yml') { |out| YAML.dump( @gestures, out) }
   end
 
  end
