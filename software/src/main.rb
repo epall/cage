@@ -48,4 +48,5 @@ loop do
   event_handlers[$events.poll].call
   handle_errors
   poll_accelerometer
+  sleep(1/50)
 end

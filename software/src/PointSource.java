@@ -62,26 +62,22 @@ public class PointSource {
                         connected = false;
                     } catch (IOException e){
                         errors.add(e);
-                        JOptionPane.showMessageDialog(null, e.getMessage(),
-                                "Failed to disconnect from dongle", JOptionPane.ERROR_MESSAGE);
                     }
                     doDisconnect = false;
                 }
 
                 if(connected) {
                     try {
-                        int[] raw = modem.getAccelerometerData();
-                        AccelerometerPoint point = new AccelerometerPoint();
-                        point.x = raw[0];
-                        point.y = raw[1];
-                        point.z = raw[2];
-                        points.add(point);
-                    } catch (Exception e){
+                        points.add(new AccelerometerPoint(modem.getAccelerometerData()));
+                    } catch (NoDataReceivedException e){
+                        // silently ignore
+                    } catch (IOException e){
                         errors.add(e);
-                        JOptionPane.showMessageDialog(null, e.getMessage(),
-                                "Problem polling accelerometer", JOptionPane.ERROR_MESSAGE);
                     }
                 }
+                try {
+                    sleep(connected ? 50 : 500);
+                } catch (InterruptedException e) {}
             }
         }
     }

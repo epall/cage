@@ -9,11 +9,14 @@ import java.io.OutputStream;
 
 import java.lang.Byte;
 import java.lang.String;
+import java.util.Arrays;
 
 public class Usbmodem {
     private InputStream input; //input for dongle
     private OutputStream output; //output for dongle
     private SerialPort serialPort;
+
+    private static final int TIMEOUT = 100; // milliseconds
 
     public void connect (String portName ) throws Exception
 	{
@@ -28,7 +31,7 @@ public class Usbmodem {
 
 			if (commPort instanceof SerialPort)
 			{
-                commPort.enableReceiveTimeout(1000);
+                commPort.enableReceiveTimeout(TIMEOUT);
 				serialPort = (SerialPort) commPort;
 				//set parameters for usb dongle serial port.
 				serialPort.setSerialPortParams(115200,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
@@ -46,32 +49,33 @@ public class Usbmodem {
 		}
 	}
 
-    public int[] getAccelerometerData() throws Exception
+    public byte[] getAccelerometerData() throws IOException
     {
-	Usbmodem dongle = this;
-	byte[] getAccData = {-1, 0x08, 0x07, 0x00, 0x00, 0x00, 0x00};
-	byte[] accData = new byte[24];
-	Byte dataHandler;
-	int[] accxyz = new int[3];
+        byte[] getAccData = {-1, 0x08, 0x07, 0x00, 0x00, 0x00, 0x00};
+        byte[] accData = new byte[24];
+        byte[] accxyz = new byte[3];
 
-	dongle.output.write(getAccData);
-	dongle.output.flush();
-	int len = dongle.input.read(accData);
+        // sift through non-data packets
+        int len;
+        long start = System.currentTimeMillis();
+        do {
+            output.write(getAccData);
+            output.flush();
+            len = input.read(accData);
+            if(len == 0) {
+                // read timed out
+                throw new NoDataReceivedException("No data received. Dongle dead?");
+            }
+            if(System.currentTimeMillis()-start > TIMEOUT){
+                throw new NoDataReceivedException("No accelerometer data received. Watch not started?");
+            }
+        } while ((len != 7) | ((accData[4] == 0) & (accData[5] == 0) & (accData[6] == 0)));
 
-	while ((len != 7) | ((accData[4] == 0) & (accData[5] == 0) & (accData[6] == 0)))
-	{
-	    dongle.output.write(getAccData);
-	    dongle.output.flush();
-	    len = dongle.input.read(accData);
-	}
-	dataHandler = accData[4];
-	accxyz[0] = dataHandler.intValue();
-	dataHandler = accData[5];
-	accxyz[1] = dataHandler.intValue();
-	dataHandler = accData[6];
-	accxyz[2] = dataHandler.intValue();
+        accxyz[0] = accData[4];
+        accxyz[1] = accData[5];
+        accxyz[2] = accData[6];
 
-	return accxyz;
+        return accxyz;
     }
 
     public void closePort() throws IOException

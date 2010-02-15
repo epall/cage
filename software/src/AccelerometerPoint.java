@@ -6,7 +6,13 @@
  * To change this template use File | Settings | File Templates.
  */
 public class AccelerometerPoint {
-    public int x;
-    public int y;
-    public int z;
+    public byte x;
+    public byte y;
+    public byte z;
+
+    public AccelerometerPoint(byte[] data){
+        x = data[0];
+        y = data[1];
+        z = data[2];
+    }
 }
