@@ -17,7 +17,7 @@ class Gesturecontroller
     @gestures << newgesture
   end
 
-  def storeallgestures
+  def store_all_gestures
     File.open('src/Gestures/gestures.yml') { |out| YAML.dump( @gestures, out) }
   end
 

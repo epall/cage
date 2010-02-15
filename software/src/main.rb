@@ -40,6 +40,11 @@ event_handlers['stop_gesture'] = Proc.new do
   $gesturecontroller.add_gesture($newgesture)
 end
 
+event_handlers['exit'] = Proc.new do
+  $stderr.puts "Dumping gestures to disk"
+  $gesturecontroller.store_all_gestures
+end
+
 def handle_errors
   err = $point_source.pollErrors
   if err
