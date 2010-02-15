@@ -1,5 +1,6 @@
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
 import gnu.io.SerialPort;
 
 import java.io.IOException;
@@ -73,18 +74,17 @@ public class Usbmodem {
 	return accxyz;
     }
 
-    public void closePort()
+    public void closePort() throws IOException
     {
         byte[] startDongle = {-1, 0x07, 0x03};
         byte[] stopDongle = {-1, 0x09, 0x03};
 
         //Apparently you need to write startDongle before StopDongle in order to actually stop the access point
-        try{
-            this.output.write(startDongle);
-            this.output.write(stopDongle);
-            this.output.close();
-            this.input.close();
-            this.serialPort.close();
-        } catch (Exception ex) {}
+        this.output.write(startDongle);
+        this.output.write(stopDongle);
+        this.output.close();
+        this.input.close();
+        this.serialPort.close();
+        System.err.println("Port closed");
     }
 }
