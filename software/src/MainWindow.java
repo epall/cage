@@ -45,6 +45,7 @@ public class MainWindow {
         StopAccelerometerButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
                 ruby.runScriptlet("$die = true");
+                ruby.runScriptlet("$run = false");
                 StopAccelerometerButton.setEnabled(false);
                 StartAccelerometer.setEnabled(true);
             }

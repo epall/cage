@@ -72,7 +72,7 @@ public class Usbmodem {
 	return accxyz;
     }
 
-    void closePort()
+    public void closePort()
     {
         byte[] startDongle = {-1, 0x07, 0x03};
         byte[] stopDongle = {-1, 0x09, 0x03};
