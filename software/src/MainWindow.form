@@ -16,7 +16,7 @@
     <colspec value="left:4dlu:noGrow"/>
     <colspec value="fill:max(d;4px):noGrow"/>
     <constraints>
-      <xy x="20" y="20" width="524" height="400"/>
+      <xy x="20" y="20" width="661" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -84,6 +84,16 @@
         <properties>
           <enabled value="false"/>
           <text value="Stop Gesture"/>
+        </properties>
+      </component>
+      <component id="a64c3" class="javax.swing.JButton" binding="liveDisplayButton">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <enabled value="false"/>
+          <text value="Show Live Display"/>
         </properties>
       </component>
     </children>

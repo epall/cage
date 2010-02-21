@@ -19,6 +19,9 @@ event_handlers = {nil => Proc.new{}}
 event_handlers['start_accelerometer'] = Proc.new do
   $stderr.puts "Connecting to accelerometer"
   $point_source.connect
+  SU.invokeLater do
+    $win.liveDisplayButton.enabled = true
+  end
   $running = true
 end
 
@@ -45,6 +48,15 @@ event_handlers['exit'] = Proc.new do
   $gesturecontroller.store_all_gestures
 end
 
+event_handlers['start_live_display'] = Proc.new do
+  $livedisplay = true
+end
+
+event_handlers['stop_live_display'] = Proc.new do
+  $stderr.puts "Stopping live display"
+  $livedisplay = false
+end
+
 def handle_errors
   err = $point_source.pollErrors
   if err
@@ -58,10 +70,15 @@ def handle_errors
 end
 
 def poll_accelerometer
-  if ($running & $recording)
+  if ($running)
     point = $point_source.poll
     if point
-      $newgesture.add_point(point)
+      $newgesture.add_point(point) if $recording
+      if $livedisplay
+        $win.liveDisplay.sliderX.value = point.x
+        $win.liveDisplay.sliderY.value = point.y
+        $win.liveDisplay.sliderZ.value = point.z
+      end
     end
   end
 end

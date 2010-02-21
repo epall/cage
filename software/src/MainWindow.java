@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Semaphore;
@@ -20,6 +22,8 @@ public class MainWindow {
     public JEditorPane AppScriptPane;
     public JButton StopAccelerometerButton;
     public JButton stopGesture;
+    public JButton liveDisplayButton;
+    public LiveDisplay liveDisplay = new LiveDisplay();
 
     public ConcurrentLinkedQueue<String> events;
     public PointSource pointSource;
@@ -68,6 +72,27 @@ public class MainWindow {
             }
         });
 
+        liveDisplayButton.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent e) {
+                liveDisplay.setVisible(true);
+            }
+        });
+
+        liveDisplay.addWindowListener(new WindowListener(){
+            public void windowOpened(WindowEvent e) { }
+            public void windowClosing(WindowEvent e) { }
+            public void windowClosed(WindowEvent e) { }
+            public void windowIconified(WindowEvent e) { }
+            public void windowDeiconified(WindowEvent e) { }
+            public void windowActivated(WindowEvent e) {
+                events.add("start_live_display");
+            }
+            public void windowDeactivated(WindowEvent e) {
+                events.add("stop_live_display");
+            }
+        });
+        
+        liveDisplay.setBounds(300, 150, 400, 300);
     }
 
     public static void main(String[] args) {
