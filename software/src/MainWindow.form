@@ -96,6 +96,15 @@
           <text value="Show Live Display"/>
         </properties>
       </component>
+      <component id="43f3" class="javax.swing.JButton" binding="plotGestureButton">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Plot Gesture"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

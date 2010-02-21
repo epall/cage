@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 public class GesturePlotter extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JButton buttonCancel;
     private JPanel plotArea;
     private Gesture gesture;
 
@@ -25,13 +24,13 @@ public class GesturePlotter extends JDialog {
 
     public void setGesture(Gesture g){
         this.gesture = g;
-        this.plotArea.invalidate();
     }
 
     private void onOK() {
         dispose();
     }
 
+    // for debugging only
     public static void main(String[] args) {
         JFrame frame = new JFrame("GesturePlotter");
         GesturePlotter plotter = new GesturePlotter();

@@ -1,4 +1,6 @@
 class Gesture
+    include Java::Gesture
+
 	def initialize
       @points = Array.new
 	end
@@ -19,4 +21,11 @@ class Gesture
 	  return @points
     end
 
+    def numPoints
+      return @points.count
+    end
+
+    def getPoint(index)
+      return @points[index]
+    end
 end

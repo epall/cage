@@ -23,6 +23,7 @@ public class MainWindow {
     public JButton StopAccelerometerButton;
     public JButton stopGesture;
     public JButton liveDisplayButton;
+    private JButton plotGestureButton;
     public LiveDisplay liveDisplay = new LiveDisplay();
 
     public ConcurrentLinkedQueue<String> events;
@@ -75,6 +76,12 @@ public class MainWindow {
         liveDisplayButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
                 liveDisplay.setVisible(true);
+            }
+        });
+
+        plotGestureButton.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent e) {
+                events.add("plot_gesture");
             }
         });
 

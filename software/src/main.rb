@@ -57,6 +57,18 @@ event_handlers['stop_live_display'] = Proc.new do
   $livedisplay = false
 end
 
+event_handlers['plot_gesture'] = Proc.new do
+  if $newgesture
+    plotter = Java::GesturePlotter.new
+    plotter.gesture = $newgesture
+    plotter.setBounds(600, 100, 500, 500)
+    
+    SU.invokeLater do
+      plotter.visible = true
+    end
+  end
+end
+
 def handle_errors
   err = $point_source.pollErrors
   if err
