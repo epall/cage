@@ -5,9 +5,9 @@ class Gesturecontroller
 
   def initialize
     @gestures = Array.new
-      #File.open('src/Gestures/gestures.yml', 'r') do |gesture_file|
-       # @gestures = YAML.load(gesture_file)
-      #end
+      File.open('src/Gestures/gestures.yml', 'r') do |gesture_file|
+        @gestures = YAML.load(gesture_file)
+      end
   end
 
   def add_gesture(newgesture)
@@ -21,4 +21,4 @@ class Gesturecontroller
     File.open('src/Gestures/gestures.yml') { |out| YAML.dump( @gestures, out) }
   end
 
- end
+end

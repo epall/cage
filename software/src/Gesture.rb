@@ -1,6 +1,8 @@
 class Gesture
     include Java::Gesture
 
+    require 'recognizers/dollar2d'
+
 	def initialize
       @points = Array.new
 	end
@@ -15,6 +17,7 @@ class Gesture
 
     def convert_points_to_gesture
       $stderr.puts @points.length
+      @resampled_points = points_to_gesture(@points)
     end
 
 	def returnallpoints
