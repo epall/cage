@@ -1,5 +1,5 @@
 $numsamples = 64
-$size = 
+$size = 250
 
 def points_to_gesture(points)
   new_points = resample(points, $numsamples)
@@ -54,6 +54,19 @@ def centroid(points)
   x = x / points.size
   y = y / points.size
   return x, y
+end
+
+def rotate_by(points, theta)
+  x, y = centroid(points)
+  c = Point.new(x, y, 0)
+  new_points = Array.new
+  points.each do |point|
+    x = (point.x - c.x)*Math.cos(theta) - (point.y - c.y)*Math.sin(theta) + c.x
+    y = (point.x - c.x)*Math.sin(theta) - (point.y - c.y)*Math.cos(theta) + c.y
+    new_point = Point.new(x, y, 0)
+    new_points << new_point
+  end
+  return new_points
 end
 
 def rotate_to_zero(points)
