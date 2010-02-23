@@ -4,7 +4,7 @@ $size = 250
 def points_to_gesture(points)
   new_points = resample(points, $numsamples)
   new_points = rotate_to_zero(new_points)
-  new_points = scale_to_square(new_points, $size)
+  new_points = scale_to_square(new_points)
   new_points = translate_to_origin(new_points)
   return new_points
 end
@@ -77,7 +77,33 @@ def rotate_to_zero(points)
   return new_points
 end
 
-def scale_to_square(points, size)
-  
+def bounding_box(points)
+  min_x = 0
+  min_y = 0
+  max_x = 0
+  max_y = 0
+  points.each do |point|
+    max_x = point.x if max_x < point.x
+    max_y = point.y if max_y < point.y
+    min_x = point.x if min_x > point.x
+    min_y = point.y if min_y > point.y
+  end
+  min_point = Point.new(min_x, min_y, 0)
+  max_point = Point.new(max_x, max_y, 0)
+  return min_point, max_point
+end
+
+def scale_to_square(points)
+  min_point, max_point = bounding_box(points)
+  b_width = max_point.x - min_point.x
+  b_height = max_point.y - min_point.y
+  new_points = Array.new
+  points.each do |point|
+    x = point.x*$size/b_width
+    y = point.y*$size/b_height
+    new_point = Point.new(x, y, 0)
+    new_points << new_point
+  end
+  return new_points
 end
 
