@@ -119,3 +119,46 @@ def translate_to(points, k)
   end
   return new_points
 end
+
+def path_distance(points1, points2)
+  d = 0
+  points.each_index do |i|
+    d = d + distance(points1[i], points2[i])
+  end
+  return d / points1.size
+end
+
+def distance_at_angle(points, t, theta)
+  new_points = rotate_by(points, theta)
+  d = path_distance(points, t)
+  return d
+end
+
+def minimum(x, y)
+  return x if x < y
+  return y if y < x
+end
+
+def distance_at_best_angle(points, t, theta_a, theta_b, theta_delta)
+  psi = (1/2)*(-1 + Math.sqrt(5))
+  x1 = psi*theta_a + (1 - psi)*theta_b
+  f1 = distance_at_angle(points, t, x1)
+  x2 = (1 - psi)*theta_a + psi*theta_b
+  f2 = distance_at_angle(points, t, x2)
+  while ((theta_b - theta_a).abs > theta_delta)
+    if (f1 < f2)
+      theta_b = x2
+      x2 = x1
+      f2 = f1
+      x1 = psi*theta_a + (1 - psi)*theta_b
+      f1 = distance_at_angle(points, t, x1)
+    else
+      theta_a = x1
+      x1 = x2
+      f1 = f2
+      x2 = (1 - psi)*theta_a + psi*theta_b
+      f2 = distance_at_angle(points, t, x2)
+    end
+  end
+  return minimum(f1, f2)
+end
