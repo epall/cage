@@ -162,3 +162,17 @@ def distance_at_best_angle(points, t, theta_a, theta_b, theta_delta)
   end
   return minimum(f1, f2)
 end
+
+def recognize(points, templates)
+  b = $infinity
+  sizesqrt = Math.sqrt(size**2 + size**2)
+  templates.each do |t|
+    d = distance_at_best_angle(points, t, -45, 45, 2)
+    if d < b
+      b = d
+      t_prime = t
+      score = 1 - b / ((1/2)*(sizesqrt))
+    end
+  end
+  return(t_prime, score)
+end
