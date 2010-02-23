@@ -1,9 +1,10 @@
 $numsamples = 64
+$size = 
 
 def points_to_gesture(points)
   new_points = resample(points, $numsamples)
   new_points = rotate_to_zero(new_points)
-  new_points = scale_to_square(new_points, size)
+  new_points = scale_to_square(new_points, $size)
   new_points = translate_to_origin(new_points)
   return new_points
 end
@@ -39,23 +40,31 @@ end
 
 def path_length(points)
   d = 0
-  points.each do |point|
-    if (i < 1)
-    else
-      d = d + distance(point[i-1], point[i])
-    end
+  points.each_index do |i|
+      d = d + distance(points[i-1], points[i]) unless i < 1
   end
   return d
 end
 
 def centroid(points)
-
+  points.each do |p|
+    x = p.x + x
+    y = p.y + y
+  end
+  x = x / points.size
+  y = y / points.size
+  return x, y
 end
 
 def rotate_to_zero(points)
-  c = Point.new(centroid(points))
+  x, y = centroid(points)
+  c = Point.new(x, y, 0)
   theta = Math.atan2((c.y - points[0].y),(c.x - points[0].x))
   new_points = rotate_by(points, -(theta))
   return new_points
+end
+
+def scale_to_square(points, size)
+  
 end
 

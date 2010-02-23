@@ -1,7 +1,7 @@
+require 'recognizers/dollar2d'
+
 class Gesture
     include Java::Gesture
-
-    require 'recognizers/dollar2d'
 
 	def initialize
       @points = Array.new
