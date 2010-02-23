@@ -1,4 +1,4 @@
-require 'recognizers/dollar2d'
+require 'src/recognizers/dollar2d'
 
 class Gesture
     include Java::Gesture

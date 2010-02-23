@@ -175,5 +175,5 @@ def recognize(points, templates)
       score = 1 - b / ((1/2)*(sizesqrt))
     end
   end
-  return(t_prime, score)
+  return t_prime, score
 end
