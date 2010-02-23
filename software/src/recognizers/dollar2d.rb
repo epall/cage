@@ -1,5 +1,6 @@
 $numsamples = 64
 $size = 250
+$infinity = 2**30
 
 def points_to_gesture(points)
   new_points = resample(points, $numsamples)
