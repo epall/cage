@@ -107,3 +107,15 @@ def scale_to_square(points)
   return new_points
 end
 
+def translate_to(points, k)
+  x, y = centroid(points)
+  c = Point.new(x, y, 0)
+  new_points = Array.new
+  points.each do |point|
+    x = point.x - c.x
+    y = point.y - c.y
+    new_point = Point.new(x, y, 0)
+    new_points << new_point
+  end
+  return new_points
+end
