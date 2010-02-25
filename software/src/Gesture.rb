@@ -26,7 +26,7 @@ class Gesture
   end
 
   def do_action
-    
+    #doesn't do anything until rb-appscript can be installed
   end
 
   def test_gesture(test_gestures)
