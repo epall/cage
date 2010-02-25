@@ -21,7 +21,7 @@ class Gesture
     @resampled_points = points_to_gesture(@points)
   end
 
-  def returnallpoints
+  def return_all_points
     return @points
   end
 
@@ -31,5 +31,10 @@ class Gesture
 
   def getPoint(index)
     return @points[index]
+  end
+
+  def test_gesture(test_gestures)
+    t_prime, score = recognize(@resampled_points, test_gestures)
+    #t_prime is the gesture from test_gestures that is the best match, score is the score (0-1) of that match
   end
 end
