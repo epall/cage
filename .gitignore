@@ -5,4 +5,4 @@ firmware/settings/ez430_chronos.dni
 firmware/settings/ez430_chronos.dbgdt
 out/
 software/.idea/workspace.xml
-
+software/.idea/dictionaries/*.xml
