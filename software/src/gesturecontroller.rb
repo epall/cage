@@ -20,4 +20,8 @@ class Gesturecontroller
     File.open('src/Gestures/gestures.dat') { |out| Marshal.dump( @gestures, out) }
   end
 
+  def test_gesture(new_gesture)
+    new_gesture.test_gesture(@gestures)
+  end
+
 end

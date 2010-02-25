@@ -169,7 +169,7 @@ module Dollar2D
     b = INFINITY
     sizesqrt = Math.sqrt(size**2 + size**2)
     templates.each do |t|
-      d = distance_at_best_angle(points, t.return_all_points, -45, 45, 2)
+      d = distance_at_best_angle(points, t.resampled_points, -45, 45, 2)
       if d < b
         b = d
         t_prime = t
