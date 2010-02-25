@@ -4,7 +4,7 @@ class Gesturecontroller
 
   def initialize
     @gestures = Array.new
-      File.open('src/Gestures/gestures.yml', 'r') do |gesture_file|
+      File.open('src/Gestures/gestures.dat', 'r') do |gesture_file|
         @gestures = Marshal.load(gesture_file) unless (File.size?(gesture_file) == nil)
       end
   end
@@ -17,7 +17,7 @@ class Gesturecontroller
   end
 
   def store_all_gestures
-    File.open('src/Gestures/gestures.yml') { |out| Marshal.dump( @gestures, out) }
+    File.open('src/Gestures/gestures.dat') { |out| Marshal.dump( @gestures, out) }
   end
 
 end
