@@ -15,4 +15,10 @@ public class AccelerometerPoint {
         y = data[1];
         z = data[2];
     }
+
+    public AccelerometerPoint(byte x1, byte y1, byte z1) {
+        x = x1;
+        y = y1;
+        z = z1;
+    }
 }

@@ -15,6 +15,7 @@ class Gesture
   def convert_points_to_gesture
     $stderr.puts @points.length
     @resampled_points = points_to_gesture(@points)
+    $stderr.puts @resampled_points.length
   end
 
   def num_points

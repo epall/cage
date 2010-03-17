@@ -1,6 +1,9 @@
+require 'src/point'
+
 module Dollar2D
+
   NUMSAMPLES = 64
-  SIZE = 250
+  SIZE = 127
   INFINITY = 2**30
 
   def points_to_gesture(points)
@@ -29,7 +32,7 @@ module Dollar2D
         if (bigd + d) >= bigi
           x = points[i-1].x + ((bigi - bigd)/ d) * (points[i].x - points[i-1].x)
           y = points[i-1].y + ((bigi - bigd)/ d) * (points[i].y - points[i-1].y)
-          temp_point = Point.new(x, y, 0)
+          temp_point = Java::AccelerometerPoint.new(x, y, 0)
           new_points << temp_point
           points[i] = temp_point
           bigd = 0
@@ -38,6 +41,7 @@ module Dollar2D
         end
       end
     end
+    return new_points
   end
 
   def path_length(points)
@@ -49,6 +53,8 @@ module Dollar2D
   end
 
   def centroid(points)
+    x = 0
+    y = 0
     points.each do |p|
       x = p.x + x
       y = p.y + y
@@ -60,12 +66,12 @@ module Dollar2D
 
   def rotate_by(points, theta)
     x, y = centroid(points)
-    c = Point.new(x, y, 0)
+    c = Java::AccelerometerPoint.new(x, y, 0)
     new_points = Array.new
     points.each do |point|
       x = (point.x - c.x)*Math.cos(theta) - (point.y - c.y)*Math.sin(theta) + c.x
       y = (point.x - c.x)*Math.sin(theta) - (point.y - c.y)*Math.cos(theta) + c.y
-      new_point = Point.new(x, y, 0)
+      new_point = Java::AccelerometerPoint.new(x, y, 0)
       new_points << new_point
     end
     return new_points
@@ -73,7 +79,7 @@ module Dollar2D
 
   def rotate_to_zero(points)
     x, y = centroid(points)
-    c = Point.new(x, y, 0)
+    c = Java::AccelerometerPoint.new(x, y, 0)
     theta = Math.atan2((c.y - points[0].y),(c.x - points[0].x))
     new_points = rotate_by(points, -(theta))
     return new_points
@@ -90,8 +96,8 @@ module Dollar2D
       min_x = point.x if min_x > point.x
       min_y = point.y if min_y > point.y
     end
-    min_point = Point.new(min_x, min_y, 0)
-    max_point = Point.new(max_x, max_y, 0)
+    min_point = Java::AccelerometerPoint.new(min_x, min_y, 0)
+    max_point = Java::AccelerometerPoint.new(max_x, max_y, 0)
     return min_point, max_point
   end
 
@@ -103,7 +109,7 @@ module Dollar2D
     points.each do |point|
       x = point.x*SIZE/b_width
       y = point.y*SIZE/b_height
-      new_point = Point.new(x, y, 0)
+      new_point = Java::AccelerometerPoint.new(x, y, 0)
       new_points << new_point
     end
     return new_points
@@ -111,12 +117,12 @@ module Dollar2D
 
   def translate_to(points, k)
     x, y = centroid(points)
-    c = Point.new(x, y, 0)
+    c = Java::AccelerometerPoint.new(x, y, 0)
     new_points = Array.new
     points.each do |point|
       x = point.x - c.x
       y = point.y - c.y
-      new_point = Point.new(x, y, 0)
+      new_point = Java::AccelerometerPoint.new(x, y, 0)
       new_points << new_point
     end
     return new_points
@@ -139,6 +145,18 @@ module Dollar2D
   def minimum(x, y)
     return x if x < y
     return y if y < x
+  end
+
+  def translate_to_origin(points)
+    c_x, c_y = centroid(points)
+    newPoints = Array.new
+    points.each do |p|
+      x = p.x - c_x
+      y = p.y - c_y
+      q = Java::AccelerometerPoint.new(x,y,0)
+      newPoints << q
+    end
+    return newPoints
   end
 
   def distance_at_best_angle(points, t, theta_a, theta_b, theta_delta)
