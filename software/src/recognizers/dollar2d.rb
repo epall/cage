@@ -2,7 +2,7 @@ require 'src/point'
 
 module Dollar2D
 
-  NUMSAMPLES = 64
+  NUMSAMPLES = 40
   SIZE = 127
   INFINITY = 2**30
 
