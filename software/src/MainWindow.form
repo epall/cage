@@ -52,8 +52,9 @@
           <forms/>
         </constraints>
         <properties>
-          <text value="Match Gesture"/>
-          <toolTipText value="Click on this button to match a gesture to one recorded"/>
+          <enabled value="false"/>
+          <text value="Record Match"/>
+          <toolTipText value="Click on this button to record a gesture to match to a saved one"/>
         </properties>
       </component>
       <component id="60bcc" class="javax.swing.JButton" binding="StopAccelerometerButton">
@@ -79,16 +80,6 @@
           <toolTipText value="Put your osascript here"/>
         </properties>
       </component>
-      <component id="32955" class="javax.swing.JButton" binding="stopGesture">
-        <constraints>
-          <grid row="8" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <enabled value="false"/>
-          <text value="Stop Gesture"/>
-        </properties>
-      </component>
       <component id="a64c3" class="javax.swing.JButton" binding="liveDisplayButton">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -106,15 +97,6 @@
         </constraints>
         <properties>
           <text value="Plot Gesture"/>
-        </properties>
-      </component>
-      <component id="f5425" class="javax.swing.JButton" binding="saveAllGestures">
-        <constraints>
-          <grid row="8" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <forms/>
-        </constraints>
-        <properties>
-          <text value="Save Gestures"/>
         </properties>
       </component>
       <component id="a3792" class="javax.swing.JTextField" binding="gestureName">
@@ -136,6 +118,35 @@
         </constraints>
         <properties>
           <text value="Gesture Name:"/>
+        </properties>
+      </component>
+      <component id="f5425" class="javax.swing.JButton" binding="saveAllGestures">
+        <constraints>
+          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Save Gestures"/>
+        </properties>
+      </component>
+      <component id="32955" class="javax.swing.JButton" binding="stopGesture">
+        <constraints>
+          <grid row="8" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <enabled value="false"/>
+          <text value="Stop Recording"/>
+        </properties>
+      </component>
+      <component id="2f17c" class="javax.swing.JButton" binding="stopMatchButton">
+        <constraints>
+          <grid row="8" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <enabled value="false"/>
+          <text value="Stop recording match"/>
         </properties>
       </component>
     </children>

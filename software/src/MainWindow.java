@@ -26,6 +26,7 @@ public class MainWindow {
     private JButton plotGestureButton;
     private JButton saveAllGestures;
     public JTextField gestureName;
+    private JButton stopMatchButton;
     public LiveDisplay liveDisplay = new LiveDisplay();
 
     public ConcurrentLinkedQueue<String> events;
@@ -44,6 +45,7 @@ public class MainWindow {
                 StopAccelerometerButton.setEnabled(true);
                 newGesture.setEnabled(true);
                 liveDisplayButton.setEnabled(true);
+                MatchGesture.setEnabled(true);
             }
         });
 
@@ -54,6 +56,7 @@ public class MainWindow {
                 StopAccelerometerButton.setEnabled(false);
                 newGesture.setEnabled(false);
                 liveDisplayButton.setEnabled(false);
+                MatchGesture.setEnabled(false);
             }
         });
 
@@ -82,6 +85,16 @@ public class MainWindow {
         MatchGesture.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
                 events.add("match_gesture");
+                stopMatchButton.setEnabled(true);
+                MatchGesture.setEnabled(false);
+            }
+        });
+
+        stopMatchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent e) {
+                events.add("stop_match");
+                stopMatchButton.setEnabled(false);
+                MatchGesture.setEnabled(true);
             }
         });
 

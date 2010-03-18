@@ -77,6 +77,14 @@ event_handlers['plot_gesture'] = Proc.new do
 end
 
 event_handlers['match_gesture'] = Proc.new do
+  $stderr.puts "Recording new gesture"
+  $newgesture = Gesture.new
+  $recording = true
+end
+
+event_handlers['stop_match'] = Proc.new do
+  $stderr.puts "Stopping match recording"
+  $recording = false
   $gesturecontroller.test_gesture($newgesture)
 end
 

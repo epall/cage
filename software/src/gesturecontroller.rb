@@ -22,6 +22,7 @@ class Gesturecontroller
   end
 
   def test_gesture(new_gesture)
+    new_gesture.convert_points_to_gesture
     new_gesture.test_gesture(@gestures)
   end
 
