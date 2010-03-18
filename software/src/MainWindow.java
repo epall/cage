@@ -24,6 +24,8 @@ public class MainWindow {
     public JButton stopGesture;
     public JButton liveDisplayButton;
     private JButton plotGestureButton;
+    private JButton saveAllGestures;
+    public JTextField gestureName;
     public LiveDisplay liveDisplay = new LiveDisplay();
 
     public ConcurrentLinkedQueue<String> events;
@@ -56,6 +58,12 @@ public class MainWindow {
                 events.add("new_gesture");
                 stopGesture.setEnabled(true);
                 newGesture.setEnabled(false);
+            }
+        });
+
+        saveAllGestures.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent e) {
+                events.add("save");
             }
         });
 

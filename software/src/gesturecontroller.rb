@@ -14,10 +14,11 @@ class Gesturecontroller
     newgesture.convert_points_to_gesture
     
     @gestures << newgesture
+
   end
 
   def store_all_gestures
-    File.open('src/Gestures/gestures.dat') { |out| Marshal.dump( @gestures, out) }
+    File.open('src/Gestures/gestures.dat', 'w') { |out| Marshal.dump( @gestures, out) }
   end
 
   def test_gesture(new_gesture)

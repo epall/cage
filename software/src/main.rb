@@ -34,6 +34,8 @@ end
 event_handlers['new_gesture'] = Proc.new do
   $stderr.puts "Recording new gesture"
   $newgesture = Gesture.new
+  $newgesture.name = $win.gestureName.getText
+  $newgesture.action = $win.AppScriptPane.getText
   $recording = true
 end
 
@@ -45,6 +47,11 @@ end
 
 event_handlers['exit'] = Proc.new do
   $stderr.puts "Dumping gestures to disk"
+  $gesturecontroller.store_all_gestures
+end
+
+event_handlers['save'] = Proc.new do
+  $stderr.puts "Saving gestures to disk"
   $gesturecontroller.store_all_gestures
 end
 
@@ -67,6 +74,10 @@ event_handlers['plot_gesture'] = Proc.new do
       plotter.visible = true
     end
   end
+end
+
+event_handlers['match_gesture'] = Proc.new do
+  $gesturecontroller.test_gesture($newgesture)
 end
 
 def handle_errors

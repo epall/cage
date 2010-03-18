@@ -16,6 +16,7 @@ class Gesture
     $stderr.puts @points.length
     @resampled_points = points_to_gesture(@points)
     $stderr.puts @resampled_points.length
+    $stderr.puts "Gesture name is #{@name}, action is #{@action}"
   end
 
   def num_points
@@ -37,5 +38,5 @@ class Gesture
   end
 
   attr_reader :points, :resampled_points
-  attr_accessor :action
+  attr_accessor :action, :name
 end
