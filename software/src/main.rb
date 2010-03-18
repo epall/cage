@@ -34,14 +34,14 @@ end
 event_handlers['new_gesture'] = Proc.new do
   $stderr.puts "Recording new gesture"
   $newgesture = Gesture.new
-  $newgesture.name = $win.gestureName.getText
-  $newgesture.action = $win.AppScriptPane.getText
   $recording = true
 end
 
 event_handlers['stop_gesture'] = Proc.new do
   $stderr.puts "Stopping gesture"
   $recording = false
+  $newgesture.name = $win.gestureName.getText
+  $newgesture.action = $win.AppScriptPane.getText
   $gesturecontroller.add_gesture($newgesture)
 end
 
