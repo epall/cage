@@ -42,6 +42,8 @@ public class MainWindow {
                 events.add("start_accelerometer");
                 StartAccelerometer.setEnabled(false);
                 StopAccelerometerButton.setEnabled(true);
+                newGesture.setEnabled(true);
+                liveDisplayButton.setEnabled(true);
             }
         });
 
@@ -50,6 +52,8 @@ public class MainWindow {
                 events.add("stop_accelerometer");
                 StartAccelerometer.setEnabled(true);
                 StopAccelerometerButton.setEnabled(false);
+                newGesture.setEnabled(false);
+                liveDisplayButton.setEnabled(false);
             }
         });
 

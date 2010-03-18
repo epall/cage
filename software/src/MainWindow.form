@@ -40,6 +40,7 @@
           <forms/>
         </constraints>
         <properties>
+          <enabled value="false"/>
           <text value="Record New Gesture"/>
           <toolTipText value="Record a new gesture with the included action (as rb-appscript)"/>
           <verticalAlignment value="0"/>
