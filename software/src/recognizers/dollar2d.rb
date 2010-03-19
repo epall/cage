@@ -2,9 +2,9 @@ require 'src/point'
 
 module Dollar2D
 
-  NUMSAMPLES = 40
-  SIZE = 127
-  INFINITY = 2**30
+  NUMSAMPLES = 40 #number of points to convert the raw points to
+  SIZE = 127 #size of the box in bounding_box that all of the points get scaled to
+  INFINITY = 2**30 #a reasonable analogue of infinity
 
   def points_to_gesture(points)
     new_points = resample(points, NUMSAMPLES)
@@ -16,7 +16,7 @@ module Dollar2D
 
   def distance(point1, point2)
     #$stderr.puts "Point1 class = #{point1.class}, Point2 class = #{point2.class}"
-    d = (point2.x - point1.x)**2 + (point2.y - point1.y)**2
+    d = (point2.x - point1.x)**2 + (point2.z - point1.z)**2
     d = Math.sqrt(d)
     return d
   end
@@ -34,8 +34,8 @@ module Dollar2D
         #$stderr.puts "i = #{i}, d = #{d}"
         if (bigd + d) >= bigi
           x = points[i-1].x + ((bigi - bigd)/ d) * (points[i].x - points[i-1].x)
-          y = points[i-1].y + ((bigi - bigd)/ d) * (points[i].y - points[i-1].y)
-          temp_point = Java::AccelerometerPoint.new(x, y, 0)
+          z = points[i-1].z + ((bigi - bigd)/ d) * (points[i].z - points[i-1].z)
+          temp_point = Java::AccelerometerPoint.new(x, 0, z)
           new_points << temp_point
           points[i] = temp_point
           bigd = 0
@@ -58,75 +58,75 @@ module Dollar2D
 
   def centroid(points)
     x = 0
-    y = 0
+    z = 0
     points.each do |p|
       x = p.x + x
-      y = p.y + y
+      z = p.z + z
     end
     x = x / points.size
-    y = y / points.size
-    return x, y
+    z = z / points.size
+    return x, z
   end
 
   def rotate_by(points, theta)
-    x, y = centroid(points)
-    c = Java::AccelerometerPoint.new(x, y, 0)
+    x, z = centroid(points)
+    c = Java::AccelerometerPoint.new(x, 0, z)
     new_points = Array.new
     points.each do |point|
-      x = (point.x - c.x)*Math.cos(theta) - (point.y - c.y)*Math.sin(theta) + c.x
-      y = (point.x - c.x)*Math.sin(theta) - (point.y - c.y)*Math.cos(theta) + c.y
-      new_point = Java::AccelerometerPoint.new(x, y, 0)
+      x = (point.x - c.x)*Math.cos(theta) - (point.z - c.z)*Math.sin(theta) + c.x
+      z = (point.x - c.x)*Math.sin(theta) - (point.z - c.z)*Math.cos(theta) + c.z
+      new_point = Java::AccelerometerPoint.new(x, 0, z)
       new_points << new_point
     end
     return new_points
   end
 
   def rotate_to_zero(points)
-    x, y = centroid(points)
-    c = Java::AccelerometerPoint.new(x, y, 0)
-    theta = Math.atan2((c.y - points[0].y),(c.x - points[0].x))
+    x, z = centroid(points)
+    c = Java::AccelerometerPoint.new(x, 0, z)
+    theta = Math.atan2((c.z - points[0].z),(c.x - points[0].x))
     new_points = rotate_by(points, -(theta))
     return new_points
   end
 
   def bounding_box(points)
     min_x = 0
-    min_y = 0
+    min_z = 0
     max_x = 0
-    max_y = 0
+    max_z = 0
     points.each do |point|
       max_x = point.x if max_x < point.x
-      max_y = point.y if max_y < point.y
+      max_z = point.z if max_z < point.z
       min_x = point.x if min_x > point.x
-      min_y = point.y if min_y > point.y
+      min_z = point.z if min_z > point.z
     end
-    min_point = Java::AccelerometerPoint.new(min_x, min_y, 0)
-    max_point = Java::AccelerometerPoint.new(max_x, max_y, 0)
+    min_point = Java::AccelerometerPoint.new(min_x, 0, min_z)
+    max_point = Java::AccelerometerPoint.new(max_x, 0, max_z)
     return min_point, max_point
   end
 
   def scale_to_square(points)
     min_point, max_point = bounding_box(points)
     b_width = max_point.x - min_point.x
-    b_height = max_point.y - min_point.y
+    b_height = max_point.z - min_point.z
     new_points = Array.new
     points.each do |point|
       x = point.x*SIZE/b_width
-      y = point.y*SIZE/b_height
-      new_point = Java::AccelerometerPoint.new(x, y, 0)
+      z = point.z*SIZE/b_height
+      new_point = Java::AccelerometerPoint.new(x, 0, z)
       new_points << new_point
     end
     return new_points
   end
 
   def translate_to(points, k)
-    x, y = centroid(points)
-    c = Java::AccelerometerPoint.new(x, y, 0)
+    x, z = centroid(points)
+    c = Java::AccelerometerPoint.new(x, 0, z)
     new_points = Array.new
     points.each do |point|
       x = point.x - c.x
-      y = point.y - c.y
-      new_point = Java::AccelerometerPoint.new(x, y, 0)
+      z = point.z - c.z
+      new_point = Java::AccelerometerPoint.new(x, 0, z)
       new_points << new_point
     end
     return new_points
@@ -147,19 +147,19 @@ module Dollar2D
     return d
   end
 
-  def minimum(x, y)
-    return x if x < y
-    return y if y < x
-    return x if x == y
+  def minimum(x, z)
+    return x if x < z
+    return z if z < x
+    return x if x == z
   end
 
   def translate_to_origin(points)
-    c_x, c_y = centroid(points)
+    c_x, c_z = centroid(points)
     newPoints = Array.new
     points.each do |p|
       x = p.x - c_x
-      y = p.y - c_y
-      q = Java::AccelerometerPoint.new(x,y,0)
+      z = p.z - c_z
+      q = Java::AccelerometerPoint.new(x,0,z)
       newPoints << q
     end
     return newPoints
@@ -197,12 +197,12 @@ module Dollar2D
     sizesqrt = Math.sqrt(SIZE**2 + SIZE**2)
     templates.each do |t|
       d = distance_at_best_angle(points, t.resampled_points, -45, 45, 2)
-      $stderr.puts "d = #{d}"
+      #$stderr.puts "d = #{d}"
       if d < b
         b = d
         t_prime = t
         score = 1 - b / ((1/2.0)*(sizesqrt))
-        $stderr.puts "Score = #{score}"
+        #$stderr.puts "Score = #{score}"
       end
     end
     return t_prime, score
