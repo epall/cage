@@ -34,7 +34,7 @@ class Gesture
   def test_gesture(test_gestures)
     t_prime, score = recognize(@resampled_points, test_gestures)
     #t_prime is the gesture from test_gestures that is the best match, score is the score of that match
-    $stderr.puts "#{t_prime.action} is the best recognized gesture, with a score of #{score}"
+    $stderr.puts "#{t_prime.name} is the best recognized gesture, with a score of #{score}"
   end
 
   attr_reader :points, :resampled_points

@@ -15,6 +15,7 @@ module Dollar2D
   end
 
   def distance(point1, point2)
+    #$stderr.puts "Point1 class = #{point1.class}, Point2 class = #{point2.class}"
     d = (point2.x - point1.x)**2 + (point2.y - point1.y)**2
     d = Math.sqrt(d)
     return d
@@ -23,12 +24,14 @@ module Dollar2D
   def resample(points, numsamples)
     bigi = path_length(points) / (numsamples - 1)
     bigd = 0
+    #$stderr.puts "bigi = #{bigi}"
     new_points = Array.new
     new_points << points[0]
     points.each_index do |i|
       if (i < 1)
       else
         d = distance(points[i-1], points[i])
+        #$stderr.puts "i = #{i}, d = #{d}"
         if (bigd + d) >= bigi
           x = points[i-1].x + ((bigi - bigd)/ d) * (points[i].x - points[i-1].x)
           y = points[i-1].y + ((bigi - bigd)/ d) * (points[i].y - points[i-1].y)
@@ -49,6 +52,7 @@ module Dollar2D
     points.each_index do |i|
       d = d + distance(points[i-1], points[i]) unless i < 1
     end
+    #$stderr.puts "path_length = #{d}"
     return d
   end
 
@@ -130,10 +134,11 @@ module Dollar2D
 
   def path_distance(points1, points2)
     d = 0
-    points.each_index do |i|
-      d = d + distance(points1[i], points2[i])
+    min = minimum(points1.size, points2.size)
+    points1.each_index do |i|
+      d = d + distance(points1[i], points2[i]) unless i >= min
     end
-    return d / points1.size
+    return d / min
   end
 
   def distance_at_angle(points, t, theta)
@@ -145,6 +150,7 @@ module Dollar2D
   def minimum(x, y)
     return x if x < y
     return y if y < x
+    return x if x == y
   end
 
   def translate_to_origin(points)
@@ -180,18 +186,23 @@ module Dollar2D
         f2 = distance_at_angle(points, t, x2)
       end
     end
+    #$stderr.puts "f1 = #{f1}, f2 = #{f2}, minimum = #{minimum(f1, f2)}"
     return minimum(f1, f2)
   end
 
   def recognize(points, templates)
     b = INFINITY
-    sizesqrt = Math.sqrt(size**2 + size**2)
+    t_prime = 0
+    score = 0
+    sizesqrt = Math.sqrt(SIZE**2 + SIZE**2)
     templates.each do |t|
       d = distance_at_best_angle(points, t.resampled_points, -45, 45, 2)
+      $stderr.puts "d = #{d}"
       if d < b
         b = d
         t_prime = t
-        score = 1 - b / ((1/2)*(sizesqrt))
+        score = 1 - b / ((1/2.0)*(sizesqrt))
+        $stderr.puts "Score = #{score}"
       end
     end
     return t_prime, score
