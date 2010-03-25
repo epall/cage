@@ -112,7 +112,7 @@ public class MainWindow {
 
         liveDisplay.addWindowListener(new WindowListener(){
             public void windowOpened(WindowEvent e) { }
-            public void windowClosing(WindowEvent e) { }
+            public void windowClosing(WindowEvent e) {}
             public void windowClosed(WindowEvent e) { }
             public void windowIconified(WindowEvent e) { }
             public void windowDeiconified(WindowEvent e) { }
@@ -127,9 +127,29 @@ public class MainWindow {
         liveDisplay.setBounds(300, 150, 400, 300);
     }
 
-    public static void main(String[] args) {
+    public boolean quit(){
+        System.err.println("Closing");
+        events.add("exit");
+        while(pointSource.isConnected())
+            ;
+        return true;
+    }
+
+    public static void main(String[] args) throws NoSuchMethodException {
         final JFrame window = new JFrame("CAGE");
         final MainWindow main = new MainWindow();
+        OSXAdapter.setQuitHandler(main, MainWindow.class.getMethod("quit"));
+        window.addWindowListener(new WindowListener(){
+            public void windowOpened(WindowEvent e) { }
+            public void windowClosing(WindowEvent e) {
+                main.quit();
+            }
+            public void windowClosed(WindowEvent e) { }
+            public void windowIconified(WindowEvent e) { }
+            public void windowDeiconified(WindowEvent e) { }
+            public void windowActivated(WindowEvent e) { }
+            public void windowDeactivated(WindowEvent e) { }
+        });
         window.setBounds(100, 100, 700, 400);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setContentPane(main.mainPanel);

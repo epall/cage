@@ -48,6 +48,7 @@ end
 event_handlers['exit'] = Proc.new do
   $stderr.puts "Dumping gestures to disk"
   $gesturecontroller.store_all_gestures
+  $point_source.disconnect
 end
 
 event_handlers['save'] = Proc.new do

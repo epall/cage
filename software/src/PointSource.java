@@ -37,6 +37,10 @@ public class PointSource {
         return errors.poll();
     }
 
+    public boolean isConnected() {
+        return connected;
+    }
+
     private class ModemThread extends Thread {
         @Override
         public void run() {
