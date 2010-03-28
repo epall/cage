@@ -14,21 +14,21 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class MainWindow extends JFrame {
 
-    public JPanel mainPanel;
-    public JButton startAccelerometer;
-    public JButton newGesture;
-    public JButton matchGesture;
-    public JEditorPane script;
-    public JButton stopAccelerometer;
-    public JButton stopGesture;
-    public JButton showLiveDisplay;
-    public JButton plotGesture;
-    public JButton saveAllGestures;
-    public JTextField gestureName;
-    public JButton stopMatch;
-    public LiveDisplay liveDisplay = new LiveDisplay();
+    private JPanel mainPanel;
+    private JButton startAccelerometer;
+    private JButton newGesture;
+    private JButton matchGesture;
+    private JEditorPane script;
+    private JButton stopAccelerometer;
+    private JButton stopGesture;
+    private JButton showLiveDisplay;
+    private JButton plotGesture;
+    private JButton saveAllGestures;
+    private JTextField gestureName;
+    private JButton stopMatch;
 
     public MainWindow() {
+        super("CAGE");
         this.setContentPane(mainPanel);
         this.setBounds(100, 100, 700, 400);
         try{
