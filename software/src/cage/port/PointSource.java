@@ -71,7 +71,8 @@ public class PointSource {
 
                 if(doDisconnect){
                     try {
-                        modem.closePort();
+                        if(modem != null)
+                            modem.closePort();
                         connected = false;
                     } catch (IOException e){
                         errors.add(e);
