@@ -35,11 +35,32 @@ class RecorderController < ApplicationController
     model.store_all_gestures
   end
 
+  button "match_gesture" do
+    model.new_gesture
+    model.matching = true
+  end
+
+  button "stop_match" do
+    model.test_gesture
+  end
+
   button "show_live_display" do
     controller = LiveDisplayController.instance
     @point_source.clear
     controller.point_source = @point_source
     controller.open
+  end
+
+  button "plot_gesture" do
+    plotter = Java::CageUi::GesturePlotter.new
+    plotter.gesture = model.current_gesture
+    plotter.visible = true
+  end
+
+  def close
+    super
+    @point_source.disconnect
+    model.store_all_gestures
   end
 
   def this_window_closing # TODO: get called by MonkeyBars

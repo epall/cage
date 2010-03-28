@@ -38,7 +38,8 @@ public class MainWindow extends JFrame {
         }
     }
 
-    public void quit(){
+    public boolean quit(){
         this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        return true;
     }
 }

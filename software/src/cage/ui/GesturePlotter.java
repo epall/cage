@@ -25,6 +25,7 @@ public class GesturePlotter extends JDialog {
                 onOK();
             }
         });
+        this.setBounds(500, 200, 500, 520);
     }
 
     public void setGesture(Gesture g){

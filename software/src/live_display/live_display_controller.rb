@@ -22,7 +22,6 @@ class LiveDisplayController < ApplicationController
   def point_source=(source)
     @poller = Thread.new do
       loop do
-        puts "polling"
         model.point = source.take
       end
     end
