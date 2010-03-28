@@ -1,124 +1,53 @@
-require 'src/gesturecontroller'
+#===============================================================================
+# Much of the platform specific code should be called before Swing is touched.
+# The useScreenMenuBar is an example of this.
+require 'rbconfig'
+require 'java'
 
-$events = $win.events
-$point_source = $win.pointSource
+#===============================================================================
+# Platform specific operations, feel free to remove or override any of these
+# that don't work for your platform/application
 
-$gesturecontroller = Gesturecontroller.new
-$newgesture = Gesture.new
+case Config::CONFIG["host_os"]
+when /darwin/i # OSX specific code
+  java.lang.System.set_property("apple.laf.useScreenMenuBar", "true")
+when /^win|mswin/i # Windows specific code
+when /linux/i # Linux specific code
+end
 
-# Booted up, go enable things
-$win.StartAccelerometer.enabled = true
+# End of platform specific code
+#===============================================================================
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__))
+require 'manifest'
 
-$running = false
-$recording = false
-
-JOP = Java::Javax::swing::JOptionPane
-SU = Java::Javax::swing::SwingUtilities
-
-event_handlers = {nil => Proc.new{}}
-event_handlers['start_accelerometer'] = Proc.new do
-  $stderr.puts "Connecting to accelerometer"
-  $point_source.connect
-  SU.invokeLater do
-    $win.liveDisplayButton.enabled = true
+# Set up global error handling so that it is consistantly logged or outputed
+# You will probably want to replace the puts with your application's logger
+def show_error_dialog_and_exit(exception, thread=nil)
+  puts "Error in application"
+  puts "#{exception.class} - #{exception}"
+  if exception.kind_of? Exception
+    puts exception.backtrace.join("\n")
+  else
+    # Workaround for JRuby issue #2673, getStackTrace returning an empty array
+    output_stream = java.io.ByteArrayOutputStream.new
+    exception.printStackTrace(java.io.PrintStream.new(output_stream))
+    puts output_stream.to_string
   end
-  $running = true
-end
 
-event_handlers['stop_accelerometer'] = Proc.new do
-  $stderr.puts "Stopping accelerometer"
-  $point_source.disconnect
-  $running = false
+  # Your error handling code goes here
+  
+  # Show error dialog informing the user that there was an error
+  title = "Application Error"
+  message = "The application has encountered an error and must shut down."
+  
+  javax.swing.JOptionPane.show_message_dialog(nil, message, title, javax.swing.JOptionPane::DEFAULT_OPTION)
+  java.lang.System.exit(0)
 end
+GlobalErrorHandler.on_error {|exception, thread| show_error_dialog_and_exit(exception, thread) }
 
-event_handlers['new_gesture'] = Proc.new do
-  $stderr.puts "Recording new gesture"
-  $newgesture = Gesture.new
-  $recording = true
-end
-
-event_handlers['stop_gesture'] = Proc.new do
-  $stderr.puts "Stopping gesture"
-  $recording = false
-  $newgesture.name = $win.gestureName.getText
-  $newgesture.action = $win.AppScriptPane.getText
-  $gesturecontroller.add_gesture($newgesture)
-end
-
-event_handlers['exit'] = Proc.new do
-  $stderr.puts "Dumping gestures to disk"
-  $gesturecontroller.store_all_gestures
-  $point_source.disconnect
-end
-
-event_handlers['save'] = Proc.new do
-  $stderr.puts "Saving gestures to disk"
-  $gesturecontroller.store_all_gestures
-end
-
-event_handlers['start_live_display'] = Proc.new do
-  $livedisplay = true
-end
-
-event_handlers['stop_live_display'] = Proc.new do
-  $stderr.puts "Stopping live display"
-  $livedisplay = false
-end
-
-event_handlers['plot_gesture'] = Proc.new do
-  if $newgesture
-    plotter = Java::GesturePlotter.new
-    plotter.gesture = $newgesture
-    plotter.setBounds(600, 100, 500, 500)
-    
-    SU.invokeLater do
-      plotter.visible = true
-    end
-  end
-end
-
-event_handlers['match_gesture'] = Proc.new do
-  $stderr.puts "Recording new gesture"
-  $newgesture = Gesture.new
-  $recording = true
-end
-
-event_handlers['stop_match'] = Proc.new do
-  $stderr.puts "Stopping match recording"
-  $recording = false
-  $gesturecontroller.test_gesture($newgesture)
-end
-
-def handle_errors
-  err = $point_source.pollErrors
-  if err
-    SU.invokeLater do
-      $win.StartAccelerometer.enabled = false
-      $win.StopAccelerometerButton.enabled = false
-    end
-    JOP.showMessageDialog(nil, err.class.name.split(/:/).last,
-            "Port Error", JOP::ERROR_MESSAGE);
-  end
-end
-
-def poll_accelerometer
-  if ($running)
-    point = $point_source.poll
-    if point
-      $newgesture.add_point(point) if $recording
-      if $livedisplay
-        $win.liveDisplay.sliderX.value = point.x
-        $win.liveDisplay.sliderY.value = point.y
-        $win.liveDisplay.sliderZ.value = point.z
-      end
-    end
-  end
-end
-
-# main loop for polling
-loop do
-  event_handlers[$events.poll].call
-  handle_errors
-  poll_accelerometer
-  sleep(1/50)
+begin
+  # Your application code goes here
+  RecorderController.instance.open
+rescue => e
+  show_error_dialog_and_exit(e)
 end

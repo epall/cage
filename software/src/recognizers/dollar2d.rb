@@ -1,4 +1,4 @@
-require 'src/point'
+require 'point'
 
 module Dollar2D
 
@@ -35,7 +35,7 @@ module Dollar2D
         if (bigd + d) >= bigi
           x = points[i-1].x + ((bigi - bigd)/ d) * (points[i].x - points[i-1].x)
           z = points[i-1].z + ((bigi - bigd)/ d) * (points[i].z - points[i-1].z)
-          temp_point = Java::AccelerometerPoint.new(x, 0, z)
+          temp_point = Java::Cage::AccelerometerPoint.new(x, 0, z)
           new_points << temp_point
           points[i] = temp_point
           bigd = 0
@@ -70,12 +70,12 @@ module Dollar2D
 
   def rotate_by(points, theta)
     x, z = centroid(points)
-    c = Java::AccelerometerPoint.new(x, 0, z)
+    c = Java::Cage::AccelerometerPoint.new(x, 0, z)
     new_points = Array.new
     points.each do |point|
       x = (point.x - c.x)*Math.cos(theta) - (point.z - c.z)*Math.sin(theta) + c.x
       z = (point.x - c.x)*Math.sin(theta) - (point.z - c.z)*Math.cos(theta) + c.z
-      new_point = Java::AccelerometerPoint.new(x, 0, z)
+      new_point = Java::Cage::AccelerometerPoint.new(x, 0, z)
       new_points << new_point
     end
     return new_points
@@ -83,7 +83,7 @@ module Dollar2D
 
   def rotate_to_zero(points)
     x, z = centroid(points)
-    c = Java::AccelerometerPoint.new(x, 0, z)
+    c = Java::Cage::AccelerometerPoint.new(x, 0, z)
     theta = Math.atan2((c.z - points[0].z),(c.x - points[0].x))
     new_points = rotate_by(points, -(theta))
     return new_points
@@ -100,8 +100,8 @@ module Dollar2D
       min_x = point.x if min_x > point.x
       min_z = point.z if min_z > point.z
     end
-    min_point = Java::AccelerometerPoint.new(min_x, 0, min_z)
-    max_point = Java::AccelerometerPoint.new(max_x, 0, max_z)
+    min_point = Java::Cage::AccelerometerPoint.new(min_x, 0, min_z)
+    max_point = Java::Cage::AccelerometerPoint.new(max_x, 0, max_z)
     return min_point, max_point
   end
 
@@ -113,7 +113,7 @@ module Dollar2D
     points.each do |point|
       x = point.x*SIZE/b_width
       z = point.z*SIZE/b_height
-      new_point = Java::AccelerometerPoint.new(x, 0, z)
+      new_point = Java::Cage::AccelerometerPoint.new(x, 0, z)
       new_points << new_point
     end
     return new_points
@@ -121,12 +121,12 @@ module Dollar2D
 
   def translate_to(points, k)
     x, z = centroid(points)
-    c = Java::AccelerometerPoint.new(x, 0, z)
+    c = Java::Cage::AccelerometerPoint.new(x, 0, z)
     new_points = Array.new
     points.each do |point|
       x = point.x - c.x
       z = point.z - c.z
-      new_point = Java::AccelerometerPoint.new(x, 0, z)
+      new_point = Java::Cage::AccelerometerPoint.new(x, 0, z)
       new_points << new_point
     end
     return new_points
@@ -159,7 +159,7 @@ module Dollar2D
     points.each do |p|
       x = p.x - c_x
       z = p.z - c_z
-      q = Java::AccelerometerPoint.new(x,0,z)
+      q = Java::Cage::AccelerometerPoint.new(x,0,z)
       newPoints << q
     end
     return newPoints
