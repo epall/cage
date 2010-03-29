@@ -18,6 +18,7 @@
     <orderEntry type="library" name="JGoodies FormLayout" level="application" />
     <orderEntry type="library" name="JRuby 1.4" level="application" />
     <orderEntry type="library" name="JRuby SDK 1.4.0 facet library" level="application" />
+    <orderEntry type="library" name="Ruby source" level="project" />
   </component>
 </module>
 
