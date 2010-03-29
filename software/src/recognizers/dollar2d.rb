@@ -25,24 +25,22 @@ module Dollar2D
     bigi = path_length(points) / (numsamples - 1)
     bigd = 0
     #$stderr.puts "bigi = #{bigi}"
-    new_points = Array.new
-    new_points << points[0]
-    points.each_index do |i|
-      if (i < 1)
+    new_points = [points[0]]
+    i = 1
+    while i < points.length do
+      d = distance(points[i-1], points[i])
+      #$stderr.puts "i = #{i}, d = #{d}"
+      if (bigd + d) >= bigi
+        x = points[i-1].x + ((bigi - bigd)/ d) * (points[i].x - points[i-1].x)
+        z = points[i-1].z + ((bigi - bigd)/ d) * (points[i].z - points[i-1].z)
+        temp_point = Point.new(x, 0, z)
+        new_points << temp_point
+        points.insert(i+1, temp_point)
+        bigd = 0
       else
-        d = distance(points[i-1], points[i])
-        #$stderr.puts "i = #{i}, d = #{d}"
-        if (bigd + d) >= bigi
-          x = points[i-1].x + ((bigi - bigd)/ d) * (points[i].x - points[i-1].x)
-          z = points[i-1].z + ((bigi - bigd)/ d) * (points[i].z - points[i-1].z)
-          temp_point = Point.new(x, 0, z)
-          new_points << temp_point
-          points[i] = temp_point
-          bigd = 0
-        else
-          bigd = bigd + d
-        end
+        bigd = bigd + d
       end
+      i += 1
     end
     return new_points
   end
