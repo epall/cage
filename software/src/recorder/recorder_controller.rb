@@ -62,8 +62,4 @@ class RecorderController < ApplicationController
     @point_source.disconnect
     model.store_all_gestures
   end
-
-  def this_window_closing # TODO: get called by MonkeyBars
-    $stderr.puts "Quit!!"
-  end
 end
