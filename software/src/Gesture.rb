@@ -4,6 +4,8 @@ require 'point'
 class Gesture
   include Java::Cage::Gesture
   include Dollar2D
+  
+  MIN_SCORE = 0.5
 
   def initialize
     @points = []
@@ -29,12 +31,20 @@ class Gesture
   end
 
   def do_action
-    #doesn't do anything until rb-appscript can be installed
+    begin
+      javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(@action)
+    rescue => e
+      $stderr.puts "Your AppleScript-fu sucks:"
+      $stderr.puts e
+    end
   end
 
+  # Looks through test_gestures to find the best match against self
   def test_gesture(test_gestures)
     t_prime, score = recognize(@resampled_points, test_gestures)
     #t_prime is the gesture from test_gestures that is the best match, score is the score of that match
+
+    t_prime.do_action if score > MIN_SCORE
     $stderr.puts "#{t_prime.name} is the best recognized gesture, with a score of #{score}"
   end
 
