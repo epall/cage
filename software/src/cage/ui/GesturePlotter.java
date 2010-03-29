@@ -82,7 +82,7 @@ public class GesturePlotter extends JDialog {
                 for(int i = 0; i < gesture.numPoints(); i++){
                     g2d.setPaint(new Color(Color.HSBtoRGB((float)i/gesture.numPoints()*0.7f, 1.0f, 1.0f)));
                     AccelerometerPoint p = gesture.getPoint(i);
-                    int x = (int)p.y*255/bounds.width+(bounds.width/2);
+                    int x = (int)p.x*255/bounds.width+(bounds.width/2);
                     int y = (int)p.z*255/bounds.height+(bounds.height/2);
                     g2d.fillOval(x, y, 7, 7);
                 }

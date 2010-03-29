@@ -6,6 +6,6 @@ class Point
     @z = z
   end
 
-  attr_accessor :x, :yd, :z
+  attr_accessor :x, :y, :z
   
 end

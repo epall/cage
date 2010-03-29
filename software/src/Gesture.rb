@@ -23,11 +23,12 @@ class Gesture
   end
 
   def num_points
-    return @points.count
+    return @resampled_points.count
   end
 
   def get_point (index)
-    return @points[index]
+    p = @resampled_points[index]
+    return Java::Cage::AccelerometerPoint.new(p.x, p.y, p.z)
   end
 
   def do_action
