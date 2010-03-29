@@ -1,15 +1,16 @@
 require 'recognizers/dollar2d'
+require 'point'
 
 class Gesture
-  include Java::Gesture
+  include Java::Cage::Gesture
   include Dollar2D
 
   def initialize
-    @points = Array.new
+    @points = []
   end
 
-  def add_point (point)
-    @points << point
+  def add_point (java_point)
+    @points << java_point
   end
 
   def convert_points_to_gesture
@@ -39,4 +40,12 @@ class Gesture
 
   attr_reader :points, :resampled_points
   attr_accessor :action, :name
+
+  def marshal_dump
+    return [@name, @action, @resampled_points]
+  end
+
+  def marshal_load(variables)
+    @name, @action, @resampled_points = variables
+  end
 end

@@ -33,7 +33,7 @@ class GestureController
     @point_poller = Thread.new do
       loop do
         begin
-          @current_gesture.points << @point_source.take
+          @current_gesture.add_point(@point_source.take)
         rescue => e
           $stderr.puts "Error when polling for points: #{e}"
         end
