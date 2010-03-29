@@ -26,6 +26,7 @@ public class MainWindow extends JFrame {
     private JButton saveAllGestures;
     private JTextField gestureName;
     private JButton stopMatch;
+    private JButton testScript;
 
     public MainWindow() {
         super("CAGE");

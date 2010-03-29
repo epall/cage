@@ -35,7 +35,7 @@ class Gesture
       javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(@action)
     rescue => e
       $stderr.puts "Your AppleScript-fu sucks:"
-      $stderr.puts e
+      $stderr.puts e.cause.message
     end
   end
 

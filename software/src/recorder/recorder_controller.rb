@@ -57,6 +57,14 @@ class RecorderController < ApplicationController
     plotter.visible = true
   end
 
+  button "test_script" do
+    begin
+      javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(view_model.current_gesture.action)
+    rescue => e
+      javax.swing.JOptionPane.showMessageDialog(nil, e.cause.message, "Script error", javax.swing.JOptionPane::WARNING_MESSAGE)
+    end
+  end
+
   def close
     super
     @point_source.disconnect
