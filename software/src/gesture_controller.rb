@@ -55,7 +55,7 @@ class GestureController
     @current_gesture.convert_points_to_gesture
     @recording = false
     @matching = false
-    current_gesture.test_gesture(@gestures)
+    @current_gesture.test_gesture(@gestures)
   end
 
   def store_all_gestures
