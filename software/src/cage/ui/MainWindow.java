@@ -8,6 +8,7 @@ import org.jruby.embed.PathType;
 import org.jruby.embed.ScriptingContainer;
 
 import javax.swing.*;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -15,18 +16,16 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class MainWindow extends JFrame {
 
     private JPanel mainPanel;
-    private JButton startAccelerometer;
-    private JButton newGesture;
-    private JButton matchGesture;
+    private JToggleButton newGesture;
+    private JToggleButton matchGesture;
     private JEditorPane script;
-    private JButton stopAccelerometer;
-    private JButton stopGesture;
+    private JToggleButton startStop;
     private JButton showLiveDisplay;
     private JButton plotGesture;
     private JButton saveAllGestures;
     private JTextField gestureName;
-    private JButton stopMatch;
     private JButton testScript;
+    private JList gestureList;
 
     public MainWindow() {
         super("CAGE");
