@@ -24,13 +24,13 @@ class RecorderController < ApplicationController
   end
 
   button "new_gesture" do
-    model.new_gesture
-  end
-
-  button "stop_gesture" do
-    model.current_gesture.name = view_model.current_gesture.name
+    if  !:recording
+      model.new_gesture
+    else
+      model.current_gesture.name = view_model.current_gesture.name
     model.current_gesture.action = view_model.current_gesture.action
     model.finish_gesture
+    end
   end
 
   button "save_all_gestures" do
@@ -38,12 +38,12 @@ class RecorderController < ApplicationController
   end
 
   button "match_gesture" do
-    model.new_gesture
-    model.matching = true
-  end
-
-  button "stop_match" do
-    model.test_gesture
+    if !:matching
+      model.new_gesture
+      model.matching = true
+    else
+       model.test_gesture
+    end
   end
 
   button "show_live_display" do
