@@ -12,24 +12,22 @@ class RecorderController < ApplicationController
   end
   
   button "start_stop" do
-    if :running
-      $stderr.puts "Running = #{:running}"
-      @point_source.disconnect
-      model.stop
-    else
-      $stderr.puts "Not running"
+    if !model.running
       @point_source.connect
       model.start
+    else
+      @point_source.disconnect
+      model.stop
     end
   end
 
   button "new_gesture" do
-    if  !:recording
+    if  !model.recording
       model.new_gesture
     else
       model.current_gesture.name = view_model.current_gesture.name
-    model.current_gesture.action = view_model.current_gesture.action
-    model.finish_gesture
+      model.current_gesture.action = view_model.current_gesture.action
+      model.finish_gesture
     end
   end
 
@@ -38,7 +36,7 @@ class RecorderController < ApplicationController
   end
 
   button "match_gesture" do
-    if !:matching
+    if !model.matching
       model.new_gesture
       model.matching = true
     else
