@@ -11,14 +11,14 @@ class RecorderController < ApplicationController
     model.point_source = @point_source
   end
   
-  button "start_accelerometer" do
-    @point_source.connect
-    model.start
-  end
-
-  button "stop_accelerometer" do
-    @point_source.disconnect
-    model.stop
+  button "start_stop" do
+    if !:running
+      @point_source.connect
+      model.start
+    else
+      @point_source.disconnect
+      model.stop
+    end
   end
 
   button "new_gesture" do

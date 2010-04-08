@@ -2,7 +2,7 @@ require 'Gesture'
 
 class GestureController
   attr_reader :running, :recording, :matching, :current_gesture
-  attr_writer :point_source, :matching
+  attr_writer :point_source, :matching, :recording
 
   def initialize
     @current_gesture = Gesture.new
@@ -13,11 +13,11 @@ class GestureController
   end
 
   def ready_to_record
-    return @running && !@recording && !@matching
+    return @running && !@matching
   end
 
   def ready_to_match
-    return @running && !@matching && !@recording
+    return @running && !@recording
   end
 
   def start

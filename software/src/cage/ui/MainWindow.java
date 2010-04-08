@@ -16,10 +16,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class MainWindow extends JFrame {
 
     private JPanel mainPanel;
-    private JToggleButton newGesture;
-    private JToggleButton matchGesture;
+    private JButton newGesture;
+    private JButton matchGesture;
     private JEditorPane script;
-    private JToggleButton startStop;
+    private JButton startStop;
     private JButton showLiveDisplay;
     private JButton plotGesture;
     private JButton saveAllGestures;
