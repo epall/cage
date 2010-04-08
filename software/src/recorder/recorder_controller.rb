@@ -12,12 +12,14 @@ class RecorderController < ApplicationController
   end
   
   button "start_stop" do
-    if !:running
-      @point_source.connect
-      model.start
-    else
+    if :running
+      $stderr.puts "Running = #{:running}"
       @point_source.disconnect
       model.stop
+    else
+      $stderr.puts "Not running"
+      @point_source.connect
+      model.start
     end
   end
 

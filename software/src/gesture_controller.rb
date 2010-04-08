@@ -10,6 +10,7 @@ class GestureController
     File.open('src/Gestures/gestures.dat', 'r') do |gesture_file|
       @gestures = Marshal.load(gesture_file) unless (File.size?(gesture_file) == nil)
     end
+    @running = false
   end
 
   def ready_to_record
