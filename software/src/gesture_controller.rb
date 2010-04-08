@@ -11,6 +11,8 @@ class GestureController
       @gestures = Marshal.load(gesture_file) unless (File.size?(gesture_file) == nil)
     end
     @running = false
+    @recording = false
+    @matching = false
   end
 
   def ready_to_record
