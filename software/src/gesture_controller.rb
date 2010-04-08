@@ -23,6 +23,10 @@ class GestureController
     return @running && !@recording
   end
 
+  def ready_to_plot
+    return @running && !@recording && !@matching
+  end
+
   def start
     @running = true
   end
