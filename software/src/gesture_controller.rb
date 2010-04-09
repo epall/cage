@@ -1,7 +1,7 @@
 require 'Gesture'
 
 class GestureController
-  attr_reader :running, :recording, :matching, :current_gesture
+  attr_reader :running, :recording, :matching, :current_gesture, :gestures
   attr_writer :point_source, :matching, :recording
 
   def initialize

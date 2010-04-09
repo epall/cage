@@ -8,12 +8,17 @@ class RecorderView < ApplicationView
   map :view => "matchGesture.enabled", :model => :ready_to_match, :using => [:default, nil]
   map :view => "matchGesture.text", :model => :matching, :using => [:matching_text, nil]
   map :view => "plotGesture.enabled,", :model => :ready_to_plot, :using => [:default, nil]
+  map :view => "gestureList.listData", :model => :gestures, :using => [:java_gestures, nil]
 
   map :view => "gestureName.text", :model => "current_gesture.name", :using => [nil, :default]
   map :view => "script.text", :model => "current_gesture.action", :using => [nil, :default]
 
   def invert(value)
     return !value
+  end
+
+  def java_gestures(gestures)
+    return gestures.to_java
   end
 
   def running_text(is_running)

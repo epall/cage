@@ -15,6 +15,10 @@ class Gesture
     @points << java_point
   end
 
+  def to_string
+    return @name.to_java
+  end
+
   def convert_points_to_gesture
     $stderr.puts @points.length
     @resampled_points = points_to_gesture(@points)
