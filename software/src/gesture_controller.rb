@@ -20,7 +20,7 @@ class GestureController
   end
 
   def ready_to_match
-    return @running && !@recording
+    return @running
   end
 
   def ready_to_plot
