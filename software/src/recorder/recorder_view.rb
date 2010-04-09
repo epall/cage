@@ -18,7 +18,8 @@ class RecorderView < ApplicationView
   end
 
   def java_gestures(gestures)
-    return gestures.to_java
+    # to_s should be getting called by toString, but it isn't...
+    return gestures.map(&:to_s).to_java
   end
 
   def running_text(is_running)

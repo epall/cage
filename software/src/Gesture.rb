@@ -2,6 +2,9 @@ require 'recognizers/dollar2d'
 require 'point'
 
 class Gesture
+  attr_reader :points, :resampled_points
+  attr_accessor :action, :name
+
   include Java::Cage::Gesture
   include Dollar2D
   
@@ -15,8 +18,8 @@ class Gesture
     @points << java_point
   end
 
-  def to_string
-    return @name.to_java
+  def to_s
+    return name
   end
 
   def convert_points_to_gesture
@@ -52,9 +55,6 @@ class Gesture
     t_prime.do_action if score > MIN_SCORE
     $stderr.puts "#{t_prime.name} is the best recognized gesture, with a score of #{score}"
   end
-
-  attr_reader :points, :resampled_points
-  attr_accessor :action, :name
 
   def marshal_dump
     return [@name, @action, @resampled_points]
