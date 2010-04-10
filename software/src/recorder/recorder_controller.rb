@@ -65,6 +65,13 @@ class RecorderController < ApplicationController
     end
   end
 
+  def gesture_list_key_pressed(evt)
+    if [8, 127].include? evt.key_code
+      model.delete_gesture(view_model.selected_gesture_index)
+    end
+    update_view
+  end
+
   def close
     super
     @point_source.disconnect

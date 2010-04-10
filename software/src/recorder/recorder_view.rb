@@ -12,6 +12,7 @@ class RecorderView < ApplicationView
 
   map :view => "gestureName.text", :model => "current_gesture.name", :using => [nil, :default]
   map :view => "script.text", :model => "current_gesture.action", :using => [nil, :default]
+  map :view => "gestureList.selectedIndex", :model => :selected_gesture_index, :using => [nil, :default]
 
   def invert(value)
     return !value

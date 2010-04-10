@@ -1,8 +1,9 @@
 require 'Gesture'
 
 class GestureController
-  attr_reader :running, :recording, :matching, :current_gesture, :gestures
-  attr_writer :point_source, :matching, :recording
+  attr_accessor :recording, :selected_gesture_index
+  attr_reader :running, :matching, :current_gesture, :gestures
+  attr_writer :point_source, :matching
 
   def initialize
     @current_gesture = Gesture.new
@@ -63,6 +64,10 @@ class GestureController
     @recording = false
     @matching = false
     current_gesture.test_gesture(@gestures)
+  end
+
+  def delete_gesture(idx)
+    @gestures.delete_at(idx)
   end
 
   def store_all_gestures
