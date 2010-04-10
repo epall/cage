@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class PointSource {
     private LinkedBlockingQueue<AccelerometerPoint> points = new LinkedBlockingQueue<AccelerometerPoint>();
-    private ConcurrentLinkedQueue<Exception> errors = new ConcurrentLinkedQueue<Exception>();
+    private Exception problem = null;
     private Usbmodem modem = new Usbmodem();
     private ModemThread runLoop;
 
@@ -34,16 +34,17 @@ public class PointSource {
     }
 
 
-    public AccelerometerPoint take() throws InterruptedException {
+    public AccelerometerPoint take() throws Exception {
+        if(problem != null){
+            Exception temp = problem;
+            problem = null;
+            throw temp;
+        }
         return points.take();
     }
 
     public void clear(){
         points.clear();
-    }
-
-    public Exception pollErrors() {
-        return errors.poll();
     }
 
     public boolean isConnected() {
@@ -64,7 +65,7 @@ public class PointSource {
                             modem.connect("/dev/tty.usbmodem001");
                             connected = true;
                         } catch (Exception f) {
-                            errors.add(f);
+                            problem = f;
                         }
                     }
                 }
@@ -75,7 +76,7 @@ public class PointSource {
                             modem.closePort();
                         connected = false;
                     } catch (IOException e){
-                        errors.add(e);
+                        problem = e;
                     }
                     doDisconnect = false;
                 }
@@ -86,7 +87,7 @@ public class PointSource {
                     } catch (NoDataReceivedException e){
                         // silently ignore
                     } catch (IOException e){
-                        errors.add(e);
+                        problem = e;
                     }
                 }
                 try {

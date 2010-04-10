@@ -1,7 +1,8 @@
 require 'Gesture'
 
 class GestureController
-  attr_reader :running, :recording, :matching, :current_gesture
+  attr_accessor :recording, :selected_gesture_index
+  attr_reader :running, :matching, :current_gesture, :gestures
   attr_writer :point_source, :matching
 
   def initialize
@@ -10,14 +11,21 @@ class GestureController
     File.open('src/Gestures/gestures.dat', 'r') do |gesture_file|
       @gestures = Marshal.load(gesture_file) unless (File.size?(gesture_file) == nil)
     end
+    @running = false
+    @recording = false
+    @matching = false
   end
 
   def ready_to_record
-    return @running && !@recording && !@matching
+    return @running && !@matching
   end
 
   def ready_to_match
-    return @running && !@matching && !@recording
+    return @running
+  end
+
+  def ready_to_plot
+    return @running && !@recording && !@matching
   end
 
   def start
@@ -56,6 +64,10 @@ class GestureController
     @recording = false
     @matching = false
     @current_gesture.test_gesture(@gestures)
+  end
+
+  def delete_gesture(idx)
+    @gestures.delete_at(idx)
   end
 
   def store_all_gestures

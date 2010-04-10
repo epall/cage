@@ -11,24 +11,24 @@ class RecorderController < ApplicationController
     model.point_source = @point_source
   end
   
-  button "start_accelerometer" do
-    @point_source.connect
-    model.start
-  end
-
-  button "stop_accelerometer" do
-    @point_source.disconnect
-    model.stop
+  button "start_stop" do
+    if !model.running
+      @point_source.connect
+      model.start
+    else
+      @point_source.disconnect
+      model.stop
+    end
   end
 
   button "new_gesture" do
-    model.new_gesture
-  end
-
-  button "stop_gesture" do
-    model.current_gesture.name = view_model.current_gesture.name
-    model.current_gesture.action = view_model.current_gesture.action
-    model.finish_gesture
+    if  !model.recording
+      model.new_gesture
+    else
+      model.current_gesture.name = view_model.current_gesture.name
+      model.current_gesture.action = view_model.current_gesture.action
+      model.finish_gesture
+    end
   end
 
   button "save_all_gestures" do
@@ -36,12 +36,12 @@ class RecorderController < ApplicationController
   end
 
   button "match_gesture" do
-    model.new_gesture
-    model.matching = true
-  end
-
-  button "stop_match" do
-    model.test_gesture
+    if !model.matching
+      model.new_gesture
+      model.matching = true
+    else
+       model.test_gesture
+    end
   end
 
   button "show_live_display" do
@@ -63,6 +63,13 @@ class RecorderController < ApplicationController
     rescue => e
       javax.swing.JOptionPane.showMessageDialog(nil, e.cause.message, "Script error", javax.swing.JOptionPane::WARNING_MESSAGE)
     end
+  end
+
+  def gesture_list_key_pressed(evt)
+    if [8, 127].include? evt.key_code
+      model.delete_gesture(view_model.selected_gesture_index)
+    end
+    update_view
   end
 
   def close
