@@ -2,8 +2,8 @@ require 'point'
 
 module Uwave
 
-  QUAN_WIN_SIZE = 8
-  QUAN_MOV_STEP = 4
+  QUAN_WIN_SIZE = 4
+  QUAN_MOV_STEP = 1
   INFINITY = 2**30
 
   def recognize(points, templates)
