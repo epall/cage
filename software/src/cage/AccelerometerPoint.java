@@ -31,4 +31,5 @@ public class AccelerometerPoint {
         retArray[2] = this.z;
         return retArray;
     }
+
 }
