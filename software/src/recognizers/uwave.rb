@@ -11,6 +11,7 @@ def quantize_acc(points, length)
   k = 0
   window = QUAN_WIN_SIZE
   temp = Array.new
+  acc_data = Array.new
   while i < length
       if i + window
           window = length - i
@@ -31,9 +32,30 @@ def quantize_acc(points, length)
   #nonlinear quantization and copy quantized value to original buffer
   for i in 0...k
     for l in x..z
-      if temp[i].l > 20 #this, fix it
-        temp[i].l
+      acc_data[i].l = case temp[i].l
+        when 20...400 then 16
+        when 10..20 then 10 + (temp[i].l-10)/10*5
+        when -20..-10 then -10 + (temp[i].l + 10)/10*5
+        when -400...-20 then -16
       end
     end
   end
-end				
+  return k
+end
+
+def DTWdistance(sample1, length1, sample2, length2, i, j, table)
+  if (i < 0 || j < 0)
+    return 2**30
+  end
+  table_width = length2
+  local_distance = 0
+  for k in x..z
+    local_distance = local_distance + ((sample1[i].k-sample2[j].k)*(sample1[i].k-sample2[j].k))
+  end
+  if ((i == 0) && (j == 0))
+    if (table[i*table_width+j] < 0)
+      table[i*table_width+j] = local_distance
+    end
+    return local_distance
+  end
+end
