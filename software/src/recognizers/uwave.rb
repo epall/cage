@@ -9,11 +9,12 @@ module Uwave
   def recognize(points, templates)
     distances = Array.new
     templates.each_index do |i|
-      $stderr.puts "templates[#{i}].class = #{templates[i].class}, points.class = #{points.class}"
+      #$stderr.puts "templates[#{i}].class = #{templates[i].class}, points.class = #{points.class}"
       $table = Array.new(templates[i].num_points * points.length, -1.0)
       distances[i] = 1.0 * DTW_distance(points, points.length, templates[i].resampled_points, templates[i].num_points, points.length-1, templates[i].num_points-1)
-      $stderr.puts distances[i].class, length.class, templates[i].num_points.class
+      #$stderr.puts distances[i].class, length.class, templates[i].num_points.class
       distances[i] = (distances[i] / (points.length + templates[i].num_points))
+      $stderr.puts "distances[i] = #{distances[i]}"
     end
     ret = 0.0
     distances.each_index do |j|
@@ -22,7 +23,7 @@ module Uwave
       end
     end
 
-    return templates[ret], ret
+    return templates[ret], distances[ret]
   end
 
   def points_to_gesture(points)
@@ -33,21 +34,22 @@ module Uwave
     i = 0
     k = 0
     window = QUAN_WIN_SIZE
-    temp = Array.new
+    temp = Array.new(length/QUAN_MOV_STEP + 1)
     acc_data = Array.new
+    temp_point_vals = Array.new(3)
     while i < length
-        if i + window
-            window = length - i
-        end #if
+        window = length - i if (i + window) > length #if
         for l in 0..2
-            temp_point_vals = Array.new
             sum = 0
             for j in i...(window + i)
-                sum += points[j].int_array[l]
+                sum = sum + points[j].int_array[l]
+              #$stderr.puts "i = #{i} l = #{l}, j = #{j}, points[j].int_array[l] = #{points[j].int_array[l]}"
             end #for j
-            temp_point_vals << (sum * 1.0/window)
+            temp_point_vals[l] = ((sum * 1.0)/window)
+          #$stderr.puts "temp_point_vals[l] = #{temp_point_vals[l]}"
         end #for l
-        temp << Point.new(temp_point_vals[0], temp_point_vals[1], temp_point_vals[2])
+        temp[k] = Point.new(temp_point_vals[0], temp_point_vals[1], temp_point_vals[2])
+        #$stderr.puts "temp[k].x = #{temp[k].x}, temp[k].y = #{temp[k].y}, temp[k].z = #{temp[k].z}"
         k = k + 1
         i = i + QUAN_MOV_STEP
     end #while
@@ -58,14 +60,15 @@ module Uwave
       for l in 0..2
         temp_array[l] = case temp[i].int_array[l]
           when 20...400 then 16
-          when 10..20 then 10 + (temp[i].int_array[l]-10)/10*5
-          when -20..-10 then -10 + (temp[i].int_array[l] + 10)/10*5
+          when 10...20 then 10 + (temp[i].int_array[l]-10)/10*5
+          when -20...-10 then -10 + (temp[i].int_array[l] + 10)/10*5
           when -400...-20 then -16
+          when -10...10 then temp[i].int_array[l]
         end
         acc_data[i] = Point.new(temp_array[0], temp_array[1], temp_array[2])
       end
     end
-    return points
+    return acc_data
   end
 
   #input: int[], int, int[], int, int, int, int[]
@@ -77,6 +80,10 @@ module Uwave
     table_width = length2
     local_distance = 0
     for k in 0..2
+      #$stderr.puts "Sample1[i].class = #{sample1[i].class}, sample2[j].class = #{sample2[j].class}"
+      #$stderr.puts "Sample1[i].int_array[k].class = #{sample1[i].int_array[k].class}, sample2[j].int_array[k].class = #{sample2[j].int_array[k].class}"
+      #$stderr.puts "sample1[i].x = #{sample1[i].x}, sample1[i].y = #{sample1[i].y}, sample1[i].z = #{sample1[i].z}"
+      #stderr.puts "sample2[j].x = #{sample2[j].x}, sample2[j].y = #{sample2[j].y}, sample2[j].z = #{sample2[j].z}"
       local_distance = local_distance + ((sample1[i].int_array[k]-sample2[j].int_array[k])*(sample1[i].int_array[k]-sample2[j].int_array[k]))
     end
     if ((i == 0) && (j == 0))
