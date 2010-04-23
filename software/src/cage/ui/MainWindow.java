@@ -27,6 +27,7 @@ public class MainWindow extends JFrame {
     private JButton testScript;
     private JList gestureList;
     private JScrollPane gestureScroll;
+    private JToggleButton continuousMatch;
 
     public MainWindow() {
         super("CAGE");

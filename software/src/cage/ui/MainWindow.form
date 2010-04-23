@@ -7,8 +7,10 @@
     <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="bottom:d:grow"/>
     <rowspec value="top:3dlu:noGrow"/>
-    <rowspec value="top:max(d;4px):grow"/>
-    <rowspec value="top:5dlu:noGrow"/>
+    <rowspec value="top:max(d;4px):noGrow"/>
+    <rowspec value="top:3dlu:noGrow"/>
+    <rowspec value="top:max(d;40px):grow"/>
+    <rowspec value="top:3dlu:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
     <colspec value="fill:max(m;175px):noGrow"/>
     <colspec value="left:4dlu:noGrow"/>
@@ -47,7 +49,7 @@
       </component>
       <component id="8642c" class="javax.swing.JButton" binding="testScript">
         <constraints>
-          <grid row="8" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="10" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
@@ -91,7 +93,7 @@
       </component>
       <component id="6124d" class="javax.swing.JButton" binding="startStop">
         <constraints>
-          <grid row="8" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="10" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
@@ -123,7 +125,7 @@
       </component>
       <component id="f5425" class="javax.swing.JButton" binding="saveAllGestures">
         <constraints>
-          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties>
@@ -134,7 +136,7 @@
         <rowspec value="center:d:grow"/>
         <colspec value="fill:d:grow"/>
         <constraints>
-          <grid row="4" column="0" row-span="3" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="0" row-span="5" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms defaultalign-vert="false"/>
         </constraints>
         <properties/>
@@ -160,7 +162,7 @@
         <rowspec value="center:d:grow"/>
         <colspec value="fill:d:grow"/>
         <constraints>
-          <grid row="4" column="2" row-span="3" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="2" row-span="5" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms defaultalign-horz="false" defaultalign-vert="false"/>
         </constraints>
         <properties/>
@@ -180,6 +182,16 @@
           </component>
         </children>
       </grid>
+      <component id="b443b" class="javax.swing.JToggleButton" binding="continuousMatch">
+        <constraints>
+          <grid row="8" column="6" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <enabled value="false"/>
+          <text value="Match continuously"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

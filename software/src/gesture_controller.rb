@@ -69,6 +69,44 @@ class GestureController
   def delete_gesture(idx)
     @gestures.delete_at(idx)
   end
+  
+  def continuous_match=(val)
+    if @matcher && !val
+      @matcher.kill
+      @matcher = nil
+    elsif @matcher.nil? && val
+      @matcher = Thread.new do
+        window = []
+        dead_start = Time.now
+        50.times do
+          window << @point_source.take
+        end
+        
+        loop do
+          $stderr.puts "Sliding window. Dead time #{Time.now-dead_start}"
+          # try current set of points
+          if Time.now-dead_start > 3 # cooldown between gestures
+            $stderr.puts "Trying a gesture"
+            g = Gesture.new
+            g.points = window.slice(1..-1)
+            g.convert_points_to_gesture
+            
+            # re-set cooldown timer if we got a match
+            dead_start = Time.now if g.test_gesture(@gestures, 0.55)
+          end
+          
+          # update sliding window
+          $stderr.puts "Window size: #{window.length}"
+          window.shift
+          window << @point_source.take
+        end
+      end
+    end
+  end
+  
+  def continuous_match
+    return !!@matcher
+  end
 
   def store_all_gestures
     File.open('src/Gestures/gestures.dat', 'w') { |out| Marshal.dump( @gestures, out) }

@@ -64,6 +64,10 @@ class RecorderController < ApplicationController
       javax.swing.JOptionPane.showMessageDialog(nil, e.cause.message, "Script error", javax.swing.JOptionPane::WARNING_MESSAGE)
     end
   end
+  
+  button "continuous_match" do
+    model.continuous_match = view_model.continuous_match
+  end
 
   def gesture_list_key_pressed(evt)
     if [8, 127].include? evt.key_code
