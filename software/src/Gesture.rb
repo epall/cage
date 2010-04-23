@@ -1,4 +1,4 @@
-require 'recognizers/dollar2d'
+require 'recognizers/Uwave'
 require 'point'
 
 class Gesture
@@ -6,7 +6,7 @@ class Gesture
   attr_accessor :action, :name, :points
 
   include Java::Cage::Gesture
-  include Dollar2D
+  include Uwave
   
   MIN_SCORE = 0.5
 
@@ -31,6 +31,10 @@ class Gesture
 
   def num_points
     return @resampled_points.count
+  end
+
+  def length
+    return @points
   end
 
   def get_point (index)
