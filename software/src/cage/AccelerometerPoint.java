@@ -23,4 +23,12 @@ public class AccelerometerPoint {
         y = y1;
         z = z1;
     }
+
+    public byte [] intArray() {
+        byte[] retArray = new byte[3];
+        retArray[0] = this.x;
+        retArray[1] = this.y;
+        retArray[2] = this.z;
+        return retArray;
+    }
 }
