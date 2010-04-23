@@ -60,6 +60,8 @@ class GestureController
 
   def test_gesture
     @point_poller.kill
+    @current_gesture.name = "match gesture"
+    @current_gesture.action = "none"
     @current_gesture.convert_points_to_gesture
     @recording = false
     @matching = false
