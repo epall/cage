@@ -4,8 +4,8 @@ QUAN_MOV_STEP = 4
 def recognize(points, templates)
   distances = Array.new
   templates.each_index do |i|
-    table = Array.new(templates[i].length * points.length)
-    distances[i] = 1.0 * DTW_distance(points, points.length, templates[i], templates[i].length, points.length-1, templates[i].length-1, table)
+    table = Array.new(templates[i].resampled_points.length * points.length)
+    distances[i] = 1.0 * DTW_distance(points, points.length, templates[i].resampled_points, templates[i].resampled_points.length, points.length-1, templates[i].resampled_points.length-1, table)
     distances << (distances[i]/ (length + templates[i].length))
   end
   ret = 0.0
