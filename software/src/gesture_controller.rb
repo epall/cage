@@ -83,20 +83,24 @@ class GestureController
         end
         
         loop do
-          $stderr.puts "Sliding window. Dead time #{Time.now-dead_start}"
           # try current set of points
           if Time.now-dead_start > 3 # cooldown between gestures
-            $stderr.puts "Trying a gesture"
-            g = Gesture.new
-            g.points = window.slice(1..-1)
-            g.convert_points_to_gesture
+            magnitude = window.inject(0) do |max, point|
+              max = [point.x.abs, point.z.abs, max].max
+            end
             
-            # re-set cooldown timer if we got a match
-            dead_start = Time.now if g.test_gesture(@gestures, 0.55)
+            if magnitude > 50
+              $stderr.puts "Trying a gesture with magnitude #{magnitude}"
+              g = Gesture.new
+              g.points = window.slice(1..-1)
+              g.convert_points_to_gesture
+            
+              # re-set cooldown timer if we got a match
+              dead_start = Time.now if g.test_gesture(@gestures, 0.55)
+            end
           end
           
           # update sliding window
-          $stderr.puts "Window size: #{window.length}"
           window.shift
           window << @point_source.take
         end
