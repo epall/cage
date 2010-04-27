@@ -1,9 +1,10 @@
 require 'Gesture'
+require 'continuous_matcher'
 
 class GestureController
   attr_accessor :recording, :selected_gesture_index
   attr_reader :running, :matching, :current_gesture, :gestures
-  attr_writer :point_source, :matching
+  attr_writer :matching
 
   def initialize
     @current_gesture = Gesture.new
@@ -73,48 +74,20 @@ class GestureController
   end
   
   def continuous_match=(val)
-    if @matcher && !val
-      @matcher.kill
-      @matcher = nil
-    elsif @matcher.nil? && val
-      @matcher = Thread.new do
-        window = []
-        dead_start = Time.now
-        50.times do
-          window << @point_source.take
-        end
-        
-        loop do
-          # try current set of points
-          if Time.now-dead_start > 3 # cooldown between gestures
-            magnitude = window.inject(0) do |max, point|
-              max = [point.x.abs, point.z.abs, max].max
-            end
-            
-            if magnitude > 50
-              $stderr.puts "Trying a gesture with magnitude #{magnitude}"
-              g = Gesture.new
-              g.points = window.slice(1..-1)
-              g.convert_points_to_gesture
-            
-              # re-set cooldown timer if we got a match
-              dead_start = Time.now if g.test_gesture(@gestures, 0.55)
-            end
-          end
-          
-          # update sliding window
-          window.shift
-          window << @point_source.take
-        end
-      end
-    end
+    @continuous_match = val
+    @continuous_matcher.running = !!val if @continuous_matcher
   end
   
   def continuous_match
-    return !!@matcher
+    return @continuous_match
   end
 
   def store_all_gestures
     File.open('src/Gestures/gestures.dat', 'w') { |out| Marshal.dump( @gestures, out) }
+  end
+
+  def point_source=(source)
+    @point_source = source
+    @continuous_matcher = ContinuousMatcher.new(source, self)
   end
 end
