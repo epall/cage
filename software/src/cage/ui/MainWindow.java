@@ -28,11 +28,13 @@ public class MainWindow extends JFrame {
     private JList gestureList;
     private JScrollPane gestureScroll;
     private JToggleButton continuousMatch;
+    private JButton editGesture;
+    private JButton deleteGesture;
 
     public MainWindow() {
         super("CAGE");
         this.setContentPane(mainPanel);
-        this.setBounds(100, 100, 700, 400);
+        this.setBounds(100, 100, 750, 400);
         try{
             OSXAdapter.setQuitHandler(this, MainWindow.class.getMethod("quit"));
         } catch(NoSuchMethodException e) {
