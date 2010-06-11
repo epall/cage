@@ -31,10 +31,6 @@ class RecorderController < ApplicationController
     end
   end
 
-  button "save_all_gestures" do
-    model.store_all_gestures
-  end
-
   button "match_gesture" do
     if !model.matching
       model.new_gesture
@@ -42,6 +38,14 @@ class RecorderController < ApplicationController
     else
        model.test_gesture
     end
+  end
+
+  button "save_all_gestures" do
+    model.store_all_gestures
+  end
+
+  button "delete_gesture" do
+    model.delete_gesture
   end
 
   button "show_live_display" do

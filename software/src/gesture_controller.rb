@@ -69,8 +69,9 @@ class GestureController
     @current_gesture.test_gesture(@gestures)
   end
 
-  def delete_gesture(idx)
-    @gestures.delete_at(idx)
+  def delete_gesture
+    $stderr.puts("Seletected gesture index = #{selected_gesture_index}")
+    @gestures.delete_at(selected_gesture_index)
   end
   
   def continuous_match=(val)
