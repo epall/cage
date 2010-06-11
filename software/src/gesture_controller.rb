@@ -9,7 +9,7 @@ class GestureController
   def initialize
     @current_gesture = Gesture.new
     @gestures = []
-    File.open('src/Gestures/gestures.dat', 'r') do |gesture_file|
+    File.open('Gestures/gestures.dat', 'r') do |gesture_file|
       @gestures = Marshal.load(gesture_file) unless (File.size?(gesture_file) == nil)
     end
     @running = false
@@ -83,7 +83,7 @@ class GestureController
   end
 
   def store_all_gestures
-    File.open('src/Gestures/gestures.dat', 'w') { |out| Marshal.dump( @gestures, out) }
+    File.open('Gestures/gestures.dat', 'w') { |out| Marshal.dump( @gestures, out) }
   end
 
   def point_source=(source)
