@@ -45,6 +45,7 @@ class RecorderController < ApplicationController
   end
 
   button "delete_gesture" do
+    model.selected_gesture_index = view_model.selected_gesture_index
     model.delete_gesture
   end
 
