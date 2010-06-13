@@ -43,11 +43,15 @@ class Gesture
   end
 
   def do_action
-    begin
-      javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(@action)
-    rescue => e
-      $stderr.puts "Your AppleScript-fu sucks:"
-      $stderr.puts e.cause.message
+    if $os_type == "OSX"
+      begin
+        javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(@action)
+      rescue => e
+        $stderr.puts "Your AppleScript-fu sucks:"
+        $stderr.puts e.cause.message
+      end
+    elsif $os_type == "WIN"
+      
     end
   end
 

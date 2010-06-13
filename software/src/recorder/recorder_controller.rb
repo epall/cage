@@ -1,4 +1,5 @@
 require 'gesture_controller'
+require 'win32OLE'
 
 class RecorderController < ApplicationController
   set_model 'GestureController'
@@ -44,9 +45,14 @@ class RecorderController < ApplicationController
     model.store_all_gestures
   end
 
+  button "edit_gesture" do
+
+  end
+
   button "delete_gesture" do
     model.selected_gesture_index = view_model.selected_gesture_index
     model.delete_gesture
+    update_view
   end
 
   button "show_live_display" do
@@ -63,10 +69,14 @@ class RecorderController < ApplicationController
   end
 
   button "test_script" do
-    begin
-      javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(view_model.current_gesture.action)
-    rescue => e
-      javax.swing.JOptionPane.showMessageDialog(nil, e.cause.message, "Script error", javax.swing.JOptionPane::WARNING_MESSAGE)
+    if $os_type == "OSX"
+      begin
+        javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(view_model.current_gesture.action)
+      rescue => e
+        javax.swing.JOptionPane.showMessageDialog(nil, e.cause.message, "Script error", javax.swing.JOptionPane::WARNING_MESSAGE)
+      end
+    elsif $os_type == "WIN"
+      
     end
   end
   

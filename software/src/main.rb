@@ -11,8 +11,11 @@ require 'java'
 case Config::CONFIG["host_os"]
 when /darwin/i # OSX specific code
   java.lang.System.set_property("apple.laf.useScreenMenuBar", "true")
-when /^win|mswin/i # Windows specific code
-when /linux/i # Linux specific code
+  $os_type = "OSX"
+  when /^win|mswin/i # Windows specific code
+  $os_type = "WIN"
+  when /linux/i # Linux specific code
+  $os_type = "UNIX"
 end
 
 # End of platform specific code
