@@ -39,9 +39,9 @@
     <orderEntry type="library" name="JRuby 1.4" level="application" />
     <orderEntry type="library" name="JRuby SDK 1.4.0 facet library" level="application" />
     <orderEntry type="library" name="Ruby source" level="project" />
-    <orderEntry type="library" name="[gem] monkeybars (v1.0.5, C:/Program Files/jruby-1.4.0/lib/ruby/gems/1.8/gems/monkeybars-1.0.5)" level="application" />
-    <orderEntry type="library" name="[gem] rawr (v1.3.9, C:/Program Files/jruby-1.4.0/lib/ruby/gems/1.8/gems/rawr-1.3.9)" level="application" />
-    <orderEntry type="library" name="[gem] rubyzip (v0.9.4, C:/Program Files/jruby-1.4.0/lib/ruby/gems/1.8/gems/rubyzip-0.9.4)" level="application" />
+    <orderEntry type="library" name="[gem] rawr (v1.3.8, /opt/jruby-1.4.0/lib/ruby/gems/1.8/gems/rawr-1.3.8)" level="application" />
+    <orderEntry type="library" name="[gem] rubyzip (v0.9.4, /Users/okeefm/.gem/jruby/1.8/gems/rubyzip-0.9.4)" level="application" />
+    <orderEntry type="library" name="[gem] monkeybars (v1.0.5, /opt/jruby-1.4.0/lib/ruby/gems/1.8/gems/monkeybars-1.0.5)" level="application" />
   </component>
 </module>
 
