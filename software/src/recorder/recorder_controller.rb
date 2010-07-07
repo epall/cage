@@ -45,10 +45,6 @@ class RecorderController < ApplicationController
     model.store_all_gestures
   end
 
-  button "edit_gesture" do
-
-  end
-
   button "delete_gesture" do
     model.selected_gesture_index = view_model.selected_gesture_index
     model.delete_gesture
