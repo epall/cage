@@ -1,5 +1,5 @@
 require 'gesture_controller'
-require 'win32OLE'
+#require 'win32ole'
 
 class RecorderController < ApplicationController
   set_model 'GestureController'
