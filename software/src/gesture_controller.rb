@@ -72,7 +72,7 @@ class GestureController
   end
 
   def delete_gesture
-    $stderr.puts("Seletected gesture index = #{selected_gesture_index}")
+    $stderr.puts("Selected gesture index = #{selected_gesture_index}")
     @gestures.delete_at(selected_gesture_index)
   end
 
