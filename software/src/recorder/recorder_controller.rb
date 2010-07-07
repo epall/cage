@@ -1,5 +1,5 @@
 require 'gesture_controller'
-require 'win32OLE'
+#require 'win32OLE'
 
 class RecorderController < ApplicationController
   set_model 'GestureController'
@@ -46,7 +46,10 @@ class RecorderController < ApplicationController
   end
 
   button "edit_gesture" do
-
+    model.selected_gesture_index = view_model.selected_gesture_index
+    model.edit_gesture
+    #view_model.script.text = model.current_gesture.action
+    #view_model.gestureName.text = model.current_gesture.name
   end
 
   button "delete_gesture" do

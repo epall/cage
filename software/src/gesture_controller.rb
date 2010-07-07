@@ -2,8 +2,8 @@ require 'Gesture'
 require 'continuous_matcher'
 
 class GestureController
-  attr_accessor :recording, :selected_gesture_index
-  attr_reader :running, :matching, :current_gesture, :gestures
+  attr_accessor :recording, :selected_gesture_index, :editing_gesture
+  attr_reader :running, :matching, :current_gesture, :gestures 
   attr_writer :matching
 
   def initialize
@@ -38,6 +38,7 @@ class GestureController
   end
 
   def new_gesture
+    @editing_gesture = false
     @point_source.clear
     @point_poller = Thread.new do
       loop do
@@ -57,6 +58,7 @@ class GestureController
     @current_gesture.convert_points_to_gesture
     @gestures << @current_gesture
     @recording = false
+    @editing_gesture = false
   end
 
   def test_gesture
@@ -71,6 +73,12 @@ class GestureController
 
   def delete_gesture
     $stderr.puts("Seletected gesture index = #{selected_gesture_index}")
+    @gestures.delete_at(selected_gesture_index)
+  end
+
+  def edit_gesture
+    @editing_gesture = true
+    @current_gesture = @gestures[selected_gesture_index]
     @gestures.delete_at(selected_gesture_index)
   end
   
