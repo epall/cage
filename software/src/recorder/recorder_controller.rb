@@ -1,5 +1,4 @@
 require 'gesture_controller'
-#require 'win32ole'
 
 class RecorderController < ApplicationController
   set_model 'GestureController'
@@ -45,6 +44,11 @@ class RecorderController < ApplicationController
     model.store_all_gestures
   end
 
+  button "edit_gesture" do
+    model.selected_gesture_index = view_model.selected_gesture_index
+    model.edit_gesture
+  end
+
   button "delete_gesture" do
     model.selected_gesture_index = view_model.selected_gesture_index
     model.delete_gesture
@@ -82,7 +86,8 @@ class RecorderController < ApplicationController
 
   def gesture_list_key_pressed(evt)
     if [8, 127].include? evt.key_code
-      model.delete_gesture(view_model.selected_gesture_index)
+      model.selected_gesture_index = view_model.selected_gesture_index
+      model.delete_gesture
     end
     update_view
   end
