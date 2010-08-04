@@ -11,13 +11,38 @@ import java.io.OutputStream;
 
 import java.lang.String;
 
+/**
+ * This is a simple class for connecting to the Chronos watch dongle with the RXTX package.
+ * @author Michael O'Keefe
+ * @author Eric Allen
+ */
+
 public class Usbmodem {
     private InputStream input; //input for dongle
     private OutputStream output; //output for dongle
-    private SerialPort serialPort;
+    private SerialPort serialPort; //the RXTX serial port used to talk to the dongle
 
     private static final int TIMEOUT = 100; // milliseconds
 
+    /**
+     * Connects the class's <code>SerialPort</code> object to the serial port defined by <code>portName</code>.
+     * <p>
+     * Parameters:
+     * <p>
+     * Baud: 115200
+     * <p>
+     * Data Bits: 8
+     * <p>
+     * Stop Bits: 1
+     * <p>
+     * Parity: None
+     * <p>
+     *
+     *
+     * @param portName the name of the serial port to be connected to (COM4, /dev/tty.usbmodem001, etc.)
+     *
+     * @throws Exception
+     */
     public void connect (String portName ) throws Exception
 	{
 		CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
@@ -39,16 +64,23 @@ public class Usbmodem {
 				input = serialPort.getInputStream();
 				output = serialPort.getOutputStream();
 
-				byte[] startDongle = {-1, 0x07, 0x03};
+				byte[] startDongle = {-1, 0x07, 0x03}; //code that has to be written to the watch in order to 116
 				output.write(startDongle);
 			}
 			else
 			{
-				System.out.println("Error: Only serial ports are handled by this example");
+				System.out.println("Parallel ports not supported");
 			}
 		}
 	}
 
+    /**
+     * Requests a byte of accelerometer data from the watch, and returns the raw values from the string written to the serial port.
+     *
+     * @return an array of 3 bytes containing the X, Y and Z values from the watch's accelerometer
+     *
+     * @throws IOException
+     */
     public byte[] getAccelerometerData() throws IOException
     {
         byte[] getAccData = {-1, 0x08, 0x07, 0x00, 0x00, 0x00, 0x00};
@@ -78,6 +110,11 @@ public class Usbmodem {
         return accxyz;
     }
 
+    /**
+     * Closes the <code>Usbmodem</code> port once the program is done accessing it, so that other programs can access the dongle.
+     *
+     * @throws IOException
+     */
     public void closePort() throws IOException
     {
         byte[] startDongle = {-1, 0x07, 0x03};

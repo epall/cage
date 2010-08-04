@@ -1,11 +1,10 @@
 package cage;
 
 /**
- * Created by IntelliJ IDEA.
- * User: epall
- * Date: Feb 15, 2010
- * Time: 2:31:52 PM
- * To change this template use File | Settings | File Templates.
+ * A container for a single point of acceleration data.
+ * 
+ * @author Eric Allen
+ *
  */
 public class AccelerometerPoint {
     public byte x;
