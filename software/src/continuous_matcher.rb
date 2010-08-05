@@ -1,3 +1,7 @@
+#This class enables "continuous" matching of gestures against the watch's motion: it looks for periods of activity followed by periods of stillness.
+#It assumes the activity is a gesture, and sends it to the recognizer and tests it against the gesture library. This way, you don't need to hit the
+#"Match gesture" button every time you want to match a gesture.
+#Author:: Eric Allen
 class ContinuousMatcher
   attr_writer :point_source
 
@@ -35,6 +39,7 @@ class ContinuousMatcher
 
   private
 
+  #The loop that the continuous matcher goes through when it's turned on.
   def threadloop
     window = []
     gesture = nil
@@ -65,7 +70,7 @@ class ContinuousMatcher
       window << @point_source.take
     end
   end
-
+ #Figures out if the average movement over the window passed to the function is less than the STILLNESS_THRESHOLD set in the class.
   def still?(window)
     x_avg = window[0..-2].inject(0.0){|sum, p| sum + p.x}.to_f / window.size-1
     y_avg = window[0..-2].inject(0.0){|sum, p| sum + p.y}.to_f / window.size-1

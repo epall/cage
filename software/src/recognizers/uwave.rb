@@ -1,11 +1,23 @@
 require 'point'
 
+#The uWave recognizer was the second recognizer implemented for CAGE. It was developed by Rice University.
+#More information about uWave is available at: htttp://www.ruf.rice.edu/~mobile/publications/liu08uwave.pdf
+#This module is specifically designed for accelerometers, and is also designed to be computationally simple.
+# In order to covnvert a set of points into a gesture, call "points_to_gesture(points)"
+# This will return a set of "resampled" points that have been converted by uWave.
+# To compare a gesture to a set of other gestures, where all sets of points have been run through points_to_gesture,
+# call "recognize(points[], templates[])"
+#
+# Author:: Michael O'Keefe
+
 module Uwave
 
   QUAN_WIN_SIZE = 4
   QUAN_MOV_STEP = 1
-  INFINITY = 2**30
+  INFINITY = 2**30 #or a reasonable approximation thereof
 
+  #This method takes a set of points and compares them against each set of points in the array of points in "templates".
+  #It returns the closest matching gesture in templates[], and the match score for that gesture.
   def recognize(points, templates)
     distances = Array.new
     templates.each_index do |i|
@@ -23,11 +35,13 @@ module Uwave
     return templates[ret], distances[ret]
   end
 
+  #This is a wrapper function which starts converting a set of points into a set of resampled points for a gesture by calling "quantize_acc(points, points.length)"
   def points_to_gesture(points)
     points = quantize_acc(points, points.length)
     return points
   end
 
+  #This function quantizes the acceleration from -16..16, in integer steps.
   def quantize_acc(points, length)
     i = 0
     k = 0
@@ -49,7 +63,7 @@ module Uwave
         i = i + QUAN_MOV_STEP
     end #while
 
-    #nonlinear quantization and copy quantized value to original buffer
+    #nonlinear quantization
     for i in 0...k
       temp_array = Array.new
       for l in 0..2
@@ -67,6 +81,7 @@ module Uwave
     return acc_data
   end
 
+  #This function computes the "Dynamic Time Warping" distance between 2 samples of points recursively, using dynamic programming.
   #input: int[], int, int[], int, int, int, int[]
   def DTW_distance(sample1, length1, sample2, length2, i, j)
     s_distance = 0.0

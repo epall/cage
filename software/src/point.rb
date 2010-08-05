@@ -16,6 +16,7 @@ class Point
     return an_array
   end
 
+  #Hackish way to be able to return x, y and z values as indices in an array.
   def[](num)
     if num == 0
       return @x

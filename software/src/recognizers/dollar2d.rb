@@ -1,5 +1,12 @@
 require 'point'
 
+#The first recognizer module written for CAGE, the $1 Recognizer was developed by the University of Washington.
+#More information about the theory behind the recognizer is available at: http://depts.washington.edu/aimgroup/proj/dollar
+#The module currently only uses 2 dimensions for matching (x and z), due to the limitations of the $1 Recognizer's design.
+#Also, it doesn't work terribly well with the Chronos watch.
+#
+#Author:: Michael O'Keefe
+
 module Dollar2D
 
   NUMSAMPLES = 40 #number of points to convert the raw points to

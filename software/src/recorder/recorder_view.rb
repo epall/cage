@@ -1,3 +1,7 @@
+#This class handles the mapping of button enabled states and text fields back and forth between Java and Ruby via Monkeybars.
+#Author:: Eric Allen
+#Author:: Michael O'Keefe
+
 class RecorderView < ApplicationView
   set_java_class 'cage.ui.MainWindow'
 

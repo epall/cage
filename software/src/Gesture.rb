@@ -1,19 +1,29 @@
 require 'recognizers/Uwave'
 require 'point'
-
+#This class holds all of the various data associated with a gesture:
+# Author:: Michael O'Keefe
+#
+# [points] the raw points from the watch
+# [resampled_points] the result of running the raw points through the included recognizer
+# [action] the AppleScript example associated with the gesture
+# [name] the human-readable name of the gesture
+# points, name, and action all have attribute accessors, resampled_points only has a reader
 class Gesture
   attr_reader :resampled_points
   attr_accessor :action, :name, :points
 
   include Java::Cage::Gesture
   include Uwave
-  
+
+  #The minimum match score that must be reported by the recognizer for the action to be executed
   MIN_SCORE = 0.5
 
+  #constructor
   def initialize
     @points = []
   end
 
+  #appends a Java::AccelerometerPoint to the array @points
   def add_point (java_point)
     @points << java_point
   end
@@ -22,6 +32,7 @@ class Gesture
     return name
   end
 
+  #runs @points through the gesture recognizer and saves the result to @resampled_points
   def convert_points_to_gesture
     $stderr.puts @points.length
     @resampled_points = points_to_gesture(@points)
@@ -37,11 +48,13 @@ class Gesture
     return @points
   end
 
+  #creates a new Java::Cage::AccelerometerPoint object containing the same acceleration values as point p
   def get_point (index)
     p = @resampled_points[index]
     return Java::Cage::AccelerometerPoint.new(p.x, p.y, p.z)
   end
 
+  #executes the action specified in @action. At the moment, only supports AppleScript, but has provisions for windows.
   def do_action
     if $os_type == "OSX"
       begin
