@@ -1,13 +1,15 @@
 require 'recognizers/Uwave'
 require 'point'
+
 #This class holds all of the various data associated with a gesture:
-# Author:: Michael O'Keefe
 #
 # [points] the raw points from the watch
 # [resampled_points] the result of running the raw points through the included recognizer
 # [action] the AppleScript example associated with the gesture
 # [name] the human-readable name of the gesture
 # points, name, and action all have attribute accessors, resampled_points only has a reader
+# Author:: Michael O'Keefe
+
 class Gesture
   attr_reader :resampled_points
   attr_accessor :action, :name, :points
