@@ -13,6 +13,13 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * This class sets up all of the UI components that Ruby's <code>application_controller</code> and <code>application_View</code>
+ * control, in conjunction with the UI designed in <code>MainWindow.form</code>.
+ *
+ * @author Eric Allen
+ * @author Michael O'Keefe
+ */
 public class MainWindow extends JFrame {
 
     private JPanel mainPanel;
@@ -31,6 +38,9 @@ public class MainWindow extends JFrame {
     private JButton editGesture;
     private JButton deleteGesture;
 
+    /**
+     * Creates the class, and tries to set an OSX quitHandler, so you can quit out of the program using the Apple-Q command.
+     */
     public MainWindow() {
         super("CAGE");
         this.setContentPane(mainPanel);
@@ -42,6 +52,11 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /**
+     * is called when OSX "quits" the program. It tells the <code>MainWindow</code> to close.
+     *
+     * @return a boolean "true"
+     */
     public boolean quit(){
         this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         return true;

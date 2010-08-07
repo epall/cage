@@ -8,12 +8,21 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * GesturePlotter is a class that plots a series of points (in this case, the points from a gesture) in a window using a rainbow of colors.
+ * @author Eric Allen
+ *
+ */
+
 public class GesturePlotter extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JPanel plotArea;
     private Gesture gesture;
 
+    /**
+     * Constructor. This sets the <code>contentPane</code>, and creates a screen with a <Code>PlotArea</code> 
+     */
     public GesturePlotter() {
         setContentPane(contentPane);
         setModal(true);
@@ -32,6 +41,9 @@ public class GesturePlotter extends JDialog {
         this.gesture = g;
     }
 
+    /**
+     * when the user clicks the Ok button, this kills the window.
+     */
     private void onOK() {
         dispose();
     }
@@ -56,6 +68,14 @@ public class GesturePlotter extends JDialog {
             }
         });
     }
+
+    /**
+     * This is the class that actually does the 2D plotting of the points in the <code>GesturePlotter</code>.
+     * It creates a new <code>Graphics2D</code> object, fills it with white, and draws each point as a circle
+     * filled with a different color.
+     *
+     * @author Eric Allen
+     */
 
     private class Plot extends JPanel {
         public Plot(){
