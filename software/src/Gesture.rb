@@ -60,10 +60,10 @@ class Gesture
   def do_action
     if $os_type == "OSX"
       begin
-        javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(@action)
+        #javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(@action)
+        `osascript -e '#{@action}'`
       rescue => e
         $stderr.puts "Your AppleScript-fu sucks:"
-        $stderr.puts e.cause.message
       end
     elsif $os_type == "WIN"
       
@@ -74,7 +74,6 @@ class Gesture
   def test_gesture(test_gestures, min_score=MIN_SCORE)
     t_prime, score = recognize(@resampled_points, test_gestures)
     #t_prime is the gesture from test_gestures that is the best match, score is the score of that match
-
     t_prime.do_action if score > min_score
     $stderr.puts "#{t_prime.name} is the best recognized gesture, with a score of #{score}"
     return (score > min_score)

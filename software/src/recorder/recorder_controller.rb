@@ -84,7 +84,8 @@ class RecorderController < ApplicationController
   button "test_script" do
     if $os_type == "OSX"
       begin
-        javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(view_model.current_gesture.action)
+        #javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(view_model.current_gesture.action)
+        `osascript -e '#{view_model.current_gesture.action}'`
       rescue => e
         javax.swing.JOptionPane.showMessageDialog(nil, e.cause.message, "Script error", javax.swing.JOptionPane::WARNING_MESSAGE)
       end

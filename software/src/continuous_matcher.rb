@@ -2,11 +2,12 @@
 #It assumes the activity is a gesture, and sends it to the recognizer and tests it against the gesture library. This way, you don't need to hit the
 #"Match gesture" button every time you want to match a gesture.
 #Author:: Eric Allen
+
 class ContinuousMatcher
   attr_writer :point_source
 
-  STILLNESS_WINDOW_SIZE = 10
-  STILLNESS_THRESHOLD = 15
+  STILLNESS_WINDOW_SIZE = 5
+  STILLNESS_THRESHOLD = 10
   MINIMUM_GESTURE_LENGTH = 10
 
   def initialize(source, controller)
@@ -22,6 +23,7 @@ class ContinuousMatcher
     end
   end
 
+  #I'm not sure why there's a double negation here...
   def running
     !!@thread
   end
@@ -57,6 +59,7 @@ class ContinuousMatcher
           g = Gesture.new
           g.points = gesture[0..-(STILLNESS_WINDOW_SIZE)] # chop off the stillness at the end
           g.convert_points_to_gesture
+          $stderr.puts "Sending gesture from continuous matcher to test_gesture"
           g.test_gesture(@controller.gestures)
         end
         gesture = nil
