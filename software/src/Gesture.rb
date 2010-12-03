@@ -60,10 +60,9 @@ class Gesture
   def do_action
     if $os_type == "OSX"
       begin
-        #javax.script.ScriptEngineManager.new.get_engine_by_name("AppleScript").eval(@action)
         `osascript -e '#{@action}'`
       rescue => e
-        $stderr.puts "Your AppleScript-fu sucks:"
+        javax.swing.JOptionPane.showMessageDialog(nil, "Your AppleScript didn't work", "Script error", javax.swing.JOptionPane::WARNING_MESSAGE)
       end
     elsif $os_type == "WIN"
       
