@@ -12,7 +12,7 @@ require 'point'
 
 class Gesture
   attr_reader :resampled_points
-  attr_accessor :action, :name, :points
+  attr_accessor :action, :name, :points, :description
 
   include Java::Cage::Gesture
   include Uwave
@@ -79,10 +79,10 @@ class Gesture
   end
 
   def marshal_dump
-    return [@name, @action, @resampled_points]
+    return [@name, @description, @action, @resampled_points]
   end
 
   def marshal_load(variables)
-    @name, @action, @resampled_points = variables
+    @name, @description, @action, @resampled_points = variables
   end
 end
