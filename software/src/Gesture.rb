@@ -38,7 +38,7 @@ class Gesture
   def convert_points_to_gesture
     $stderr.puts @points.length
     @resampled_points = points_to_gesture(@points)
-    $stderr.puts @resampled_points.length
+    #$stderr.puts @resampled_points.length
     $stderr.puts "Gesture name is #{@name}, action is #{@action}"
   end
 
@@ -73,9 +73,8 @@ class Gesture
   def test_gesture(test_gestures, min_score=MIN_SCORE)
     t_prime, score = recognize(@resampled_points, test_gestures)
     #t_prime is the gesture from test_gestures that is the best match, score is the score of that match
-    t_prime.do_action if score > min_score
-    $stderr.puts "#{t_prime.name} is the best recognized gesture, with a score of #{score}"
-    return (score > min_score)
+    $stderr.puts "#{t_prime.name} is the best recognized gesture, with a score of #{score}" if score > min_score
+    return t_prime.action if (score > min_score)
   end
 
   def marshal_dump

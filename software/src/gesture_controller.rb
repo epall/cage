@@ -10,11 +10,24 @@ class GestureController
 
   #reads in the already created gestures from gestures.dat and initializes several variables
   def initialize
+    $equation = ""
     @current_gesture = Gesture.new
     @gestures = []
     File.open('Gestures/gestures.dat', 'r') do |gesture_file|
-      @gestures = Marshal.load(gesture_file) unless (File.size?(gesture_file) == nil)
+      if (File.size?(gesture_file) == nil)
+        names = ["Addition", "Subtraction", "Multiplication", "Division", "Equals", "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"]
+        actions = ["+", "-", "*", "/", "=", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        names.each_index do |i|
+          temp_gesture = Gesture.new()
+          temp_gesture.name = names[i]
+          temp_gesture.action= actions[i]
+         @gestures.push(temp_gesture)
+        end
+      else
+        @gestures = Marshal.load(gesture_file)
+      end
     end
+
     @running = false
     @recording = false
     @matching = false
@@ -66,6 +79,12 @@ class GestureController
     @editing_gesture = false
   end
 
+  def do_math(equation)
+    ans = `echo #{equation.chop}|bc`
+    `say The answer is #{ans}`
+    $stderr.puts "The answer is #{ans}"
+  end
+  
   #This turns the just-recorded gesture into a "test gesture," which will be matched against the various gestures in the recognizer.
   def test_gesture
     @point_poller.kill
@@ -74,7 +93,12 @@ class GestureController
     @current_gesture.convert_points_to_gesture
     @recording = false
     @matching = false
-    @current_gesture.test_gesture(@gestures)
+    $equation = $equation + @current_gesture.test_gesture(@gestures)
+    $stderr.puts $equation
+    if $equation[-1] == 61
+      do_math($equation)
+      $equation = ""
+    end
   end
 
   def delete_gesture
